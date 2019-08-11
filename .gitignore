@@ -12,6 +12,8 @@
 
 # Configuraciones de Firestore
 /src/environments
+/src/environments/environments.prod.ts
+/src/environments/environments.ts
 
 # profiling files
 chrome-profiler-events.json
