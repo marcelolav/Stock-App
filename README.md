@@ -1,27 +1,47 @@
-# StockAngular
+# Detalles para la instalacion:
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.1.2.
+1) Crear carpeta dentro de src/environments y dentro de ella crear los archivos para configuracion del proyecto:
 
-## Development server
+environment.prod.ts  
+environment.ts
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+2) Modelo de environment para este proyecto:
 
-## Code scaffolding
+```
+export const environment = {
+  production: false,
+  firebaseConfig: {
+      apiKey: 'xxxxxxxxxxxxxxxx',
+      authDomain: 'xxxxxxxxxxxxxxxx',
+      databaseURL: 'xxxxxxxxxxxxxxxx',
+      projectId: 'xxxxxxxxxxxxxxxx',
+      storageBucket: '',
+      messagingSenderId: 'xxxxxxxxxxxxxxxx',
+      appId: 'xxxxxxxxxxxxxxxx'
+    }
+};
+```
+Los xxxx son los datos de su propio firestore o firebase.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+3) Instale las dependencias:
 
-## Build
+``` 
+npm install 
+```
+4) Luego de esto ya se encuentra en posicion de abrir un servidor de desarrollo para testear el producto:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+``` npm start ``` 
+o bien 
+``` ng serve -open ```
 
-## Running unit tests
+Esto creará un servidor en la dirección localhost,  verifique los mensajes en pantalla para saber en que dirección y puerto se alojó la aplicacion.  
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Importante:
 
-## Running end-to-end tests
+Cuando se abre un servidor de desarrollo en la máquina local puede que de algun tipo de advertencia desde el firewall, verifique el mensaje y decida en consecuencia.  Siempre necesitará un puerto disponible para la escucha de la app. 
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Para consultas, reporte de errores o bien si desea unirse al proyecto puede:
 
-## Further help
+[Comunicarse con desarrollo](mailto:marcelo.lavandeira@gmail.com)	
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+10/08/2019 Buenos Aires, República Argentina
