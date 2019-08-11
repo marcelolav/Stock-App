@@ -1,0 +1,29 @@
+<!-- Inicio de navegacion principal arriba fijo. Ver css asociado con la clase -->
+<nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
+  <!-- Brand Logo del sistema (aca puede ir imagen pequeña) -->
+  <a class="navbar-brand" id="imagenCubo" routerLink="/">
+    <!-- <img src="../../../assets/logobrand.png" width="40" height="40" alt="Tickets-App"> -->
+    StockAPP
+  </a>
+  <!-- Boton o link para ir a pagina principal. -->
+  <div class="collapse navbar-collapse">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="/">
+          Inicio <span class="sr-only">(current)</span>
+        </a>
+      </li>
+    </ul>
+    <!-- Dropdown usuario logueado Operaciones -->
+    <div class="btn-group ml-5" dropdown>
+      <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle botlog mr-4" aria-controls="productos">
+        Configuración 
+        <!-- <span class="caret"></span> -->
+      </button>
+      <ul id="productos" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+        <li role="menuitem"><a class="dropdown-item" routerLink='abmproductos'>Productos</a></li>
+        <li role="menuitem"><a class="dropdown-item" routerLink='abmrubros'>Rubros</a></li>
+      </ul>
+    </div>
+  </div>
+</nav> <!-- Fin de navegacion -->
