@@ -7,14 +7,14 @@
 <div class="row">
   <table class="table mt-10">
     <thead>
-      <th>ID</th>
+      <th class="d-none">ID</th>
       <th>Nombre</th>
       <th>Estado</th>
       <th>Acciones</th>
     </thead>
     <tbody>
       <tr *ngFor="let rb of rubros" [ngClass]="{'inactivo': !rb.activo, 'activo': rb.activo}">
-        <td> {{rb.id}} </td>
+        <td class="d-none"> {{rb.id}} </td>
         <td> {{rb.nombreRubro}} </td>
         <td *ngIf="rb.activo"> Rubro Inactivo </td>
         <td *ngIf="!rb.activo"> Rubro Activo </td>

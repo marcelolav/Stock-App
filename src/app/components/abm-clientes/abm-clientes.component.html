@@ -1,1 +1,141 @@
-<p>abm-clientes works!</p>
+<div class="row mt-3 mb-3">
+  <button title="Agregar Cliente" class="btn btn-success mr-2" (click)="openModal(altaCliente, regCliente)">
+    <fa name="plus-square"></fa>
+    Agregar Cliente
+  </button>
+</div>
+<div class="row">
+  <table class="table mt-10">
+    <thead>
+      <th class="d-none">ID</th>
+      <th>Nombre</th>
+      <th>Dirección</th>
+      <th>Teléfono</th>
+      <th>C.U.I.T.</th>
+      <th>Acciones</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cl of clientes">
+        <td class="d-none"> {{cl.id}} </td>
+        <td> {{cl.nombre}} </td>
+        <td> {{cl.direccion}} </td>
+        <td> {{cl.telefono}} </td>
+        <td> {{cl.cuit}} </td>
+        <td>
+          <button class="btn btn-info mr-3" (click)="openModal(editarCliente,cl)">
+            <fa name="cog" animation="spin"></fa> Editar
+          </button>
+          <button class="btn btn-danger" (click)="openModal(eliminarCliente, cl)">
+            <fa name="trash"></fa> Eliminar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Template para dar de alta un cliente -->
+<ng-template #altaCliente>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Alta de Rubro</h4>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group row">
+        <!-- <input type="hidden" id="id" name="id" value="" [(ngModel)]="regCliente.id"> -->
+        <div class="col-md-6">
+          <label for="nombre">Nombre:</label>
+          <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="regCliente.nombre">
+        </div>
+        <div class="col-md-6">
+          <label for="direccion">Direccion:</label>
+          <input type="text" class="form-control" id="direccion" name="direccion" [(ngModel)]="regCliente.direccion">
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label for="telefono">Teléfono:</label>
+          <input type="text" class="form-control" id="telefono" name="telefono" [(ngModel)]="regCliente.telefono">
+        </div>
+        <div class="col-md-6">
+          <label for="cuit">C.U.I.T.:</label>
+          <input type="text" class="form-control" id="cuit" name="cuit" [(ngModel)]="regCliente.cuit">
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button (click)="agregarCliente(regCliente)" class="btn btn-primary">
+      <fa name="check"></fa> Guardar
+    </button>
+    <button class="btn btn-danger" (click)="modalRef.hide()">
+      <fa name="times"></fa> Cancelar
+    </button>
+  </div>
+</ng-template>
+<!-- Editar Cliente -->
+<ng-template #editarCliente>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Editar Cliente</h4>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group row">
+        <input type="hidden" id="id" name="id" value="" [(ngModel)]="regCliente.id">
+        <div class="col-md-6">
+          <label for="nombre">Nombre:</label>
+          <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="regCliente.nombre">
+        </div>
+        <div class="col-md-6">
+          <label for="direccion">Direccion:</label>
+          <input type="text" class="form-control" id="direccion" name="direccion" [(ngModel)]="regCliente.direccion">
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label for="telefono">Teléfono:</label>
+          <input type="text" class="form-control" id="telefono" name="telefono" [(ngModel)]="regCliente.telefono">
+        </div>
+        <div class="col-md-6">
+          <label for="cuit">C.U.I.T.:</label>
+          <input type="text" class="form-control" id="cuit" name="cuit" [(ngModel)]="regCliente.cuit">
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button (click)="confirmaEdicion(regCliente)" class="btn btn-primary">
+      <fa name="check"></fa> Confirmar Edición
+    </button>
+    <button class="btn btn-danger" (click)="modalRef.hide()">
+      <fa name="times"></fa> Cancelar
+    </button>
+  </div>
+</ng-template>
+
+<!-- Confirma Eliminar -->
+<ng-template #eliminarCliente>
+  <div class="modal-header">
+    <h3>Eliminar Cliente</h3>
+  </div>
+  <div class="modal-body">
+    <strong>
+      <h5>PRECAUCION: Esta acción no puede revertirse</h5>
+    </strong>
+    Está a punto de eliminar el registro de Cliente: <br>
+    <strong> {{regCliente.nombre}} </strong> <br>
+    <strong> {{regCliente.direccion}} </strong> <br>
+    <strong> {{regCliente.telefono}} </strong> <br> 
+    <strong> {{regCliente.cuit}} </strong> <br>
+     <br>
+    ¿Confirma Eliminación?
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-danger" (click)="confirmaEliminar(regCliente)">
+      <fa name="trash"></fa> Si
+    </button>
+    <button class="btn" (click)="modalRef.hide()">
+      <fa name="times"></fa> No
+    </button>
+  </div>
+</ng-template>

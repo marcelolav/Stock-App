@@ -1,15 +1,61 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, TemplateRef, OnDestroy } from '@angular/core';
+import { ClientesService } from 'src/app/services/clientes.service';
+import { Cliente } from 'src/app/interfaces/cliente';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 @Component({
   selector: 'ang-abm-clientes',
   templateUrl: './abm-clientes.component.html',
   styleUrls: ['./abm-clientes.component.css']
 })
-export class AbmClientesComponent implements OnInit {
+export class AbmClientesComponent implements OnInit, OnDestroy {
 
-  constructor() { }
+  constructor(
+    private cliSer: ClientesService,
+    private modalService: BsModalService,
+  ) { }
+
+  clientes = [];
+  regCliente = {} as Cliente;
+  modalRef: BsModalRef;
+  private unsubscribe = new Subject();
 
   ngOnInit() {
+    this.cliSer.getClientes()
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(res => { this.clientes = res; });
   }
 
+  agregarCliente(cliente: Cliente) {
+    this.cliSer.addCliente(cliente);
+    this.regCliente = {} as Cliente;
+    this.modalRef.hide();
+  }
+
+  confirmaEdicion(cliente: Cliente) {
+    console.log(cliente);
+    this.cliSer.updateCliente(cliente);
+    this.regCliente = {} as Cliente;
+    this.modalRef.hide();
+  }
+  confirmaEliminar(cliente: Cliente) {
+    this.cliSer.deleteCliente(cliente);
+    this.regCliente = {} as Cliente;
+    this.modalRef.hide();
+  }
+  openModal(template: TemplateRef<any>, data: any) {
+    this.regCliente = {
+      id: data.id,
+      nombre: data.nombre,
+      direccion: data.direccion,
+      telefono: data.telefono,
+      cuit: data.cuit
+    };
+    this.modalRef = this.modalService.show(template);
+  }
+  ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
+  }
 }
