@@ -1,37 +1,116 @@
-<form>
-    <div class="form-group row">
-        <label for="nombre" class="form-check-label">Nombre:</label>
-        <div class="col-md-5">
-            <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="regRubro.nombre">
-        </div>
-        <div class="col-md-3">
-            <input type="checkbox" class="form-check-input" id="activo" name="activo" [(ngModel)]="regRubro.activo">
-        </div>
-        <label for="activo" class="form-check-label">Activo:</label>
-    </div>
-    <div class="row mb-5">
-        <div class="col text-center">
-            <button (click)="agregaRubro(regRubro)" class="btn btn-primary" >Guardar</button>
-
-        </div>
-    </div>
-</form>
-<table class="table mt-10">
+<div class="row mt-3 mb-3">
+  <button title="Agregar Rubro" class="btn btn-success mr-2" (click)="openModal(altaRubro, regRubro)">
+    <fa name="plus-square"></fa>
+    Agregar Rubro
+  </button>
+</div>
+<div class="row">
+  <table class="table mt-10">
     <thead>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Estado</th>
-        <th>Acciones</th>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Estado</th>
+      <th>Acciones</th>
     </thead>
     <tbody>
-        <tr *ngFor="let rb of rubros" [ngClass]="{'inactivo': !rb.activo, 'activo': rb.activo}">
-            <td> {{rb.id}} </td>
-            <td> {{rb.nombre}} </td>
-            <td *ngIf="rb.activo"> Rubro Inactivo </td>
-            <td *ngIf="!rb.activo"> Rubro Activo </td>
-            <td>
-                <button class="btn btn-info">Editar</button>
-            </td>
-        </tr>
+      <tr *ngFor="let rb of rubros" [ngClass]="{'inactivo': !rb.activo, 'activo': rb.activo}">
+        <td> {{rb.id}} </td>
+        <td> {{rb.nombreRubro}} </td>
+        <td *ngIf="rb.activo"> Rubro Inactivo </td>
+        <td *ngIf="!rb.activo"> Rubro Activo </td>
+        <td>
+          <button class="btn btn-info mr-3" (click)="openModal(editaRubro,rb)">
+            <fa name="cog" animation="spin"></fa> Editar
+          </button>
+          <button class="btn btn-danger" (click)="openModal(eliminaRubro, rb)">
+            <fa name="trash"></fa> Eliminar
+          </button>
+        </td>
+      </tr>
     </tbody>
-</table>
+  </table>
+</div>
+<!-- Template para dar de alta un rubro -->
+<ng-template #altaRubro>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Alta de Rubro</h4>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group row">
+        <input type="hidden" id="id" name="id" value="" [(ngModel)]="regRubro.id">
+        <div class="col-md-8">
+          <label for="nombre">Nombre:</label>
+          <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="regRubro.nombreRubro">
+        </div>
+        <div class="col-md-4">
+          <label for="activo">Estado:</label>
+          <select name="activo" id="activo" class="form-control" [(ngModel)]="regRubro.activo">
+            <option value="true">Activo</option>
+            <option value="false">Inactivo</option>
+          </select>
+        </div>
+      </div>
+    </form>
+
+  </div>
+  <div class="modal-footer">
+    <button (click)="agregaRubro(regRubro)" class="btn btn-primary">
+      <fa name="check"></fa> Guardar
+    </button>
+    <button class="btn btn-danger" (click)="modalRef.hide()">
+      <fa name="times"></fa> Cancelar
+    </button>
+
+  </div>
+
+</ng-template>
+<!-- Editar Rubro -->
+<ng-template #editaRubro>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Editar Rubro</h4>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group row">
+        <input type="hidden" id="id" name="id" value="" [(ngModel)]="regRubro.id">
+        <div class="col-md-8">
+          <label for="nombre">Nombre:</label>
+          <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="regRubro.nombreRubro">
+        </div>
+        <div class="col-md-4">
+          <label for="activo">Estado:</label>
+          <select name="activo" id="activo" class="form-control" [(ngModel)]="regRubro.activo">
+            <option value="true">Activo</option>
+            <option value="false">Inactivo</option>
+          </select>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+        <button (click)="confirmaEdicion(regRubro)" class="btn btn-primary">
+                <fa name="check"></fa> Confirmar Edición
+              </button>
+              <button class="btn btn-danger" (click)="modalRef.hide()">
+                <fa name="times"></fa> Cancelar
+              </button>
+  </div>
+</ng-template>
+
+<!-- Confirma Eliminar -->
+<ng-template #eliminaRubro>
+  <div class="modal-header">
+    <h3>Eliminar Rubro</h3>
+  </div>
+  <div class="modal-body">
+    <strong><h5>PRECAUCION: Esta acción no puede revertirse</h5></strong>
+    Está a punto de eliminar el rubro: <strong> {{regRubro.nombreRubro}} </strong>. <br><br>
+    
+    ¿Confirma Eliminación?
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-danger" (click)="confirmaEliminar(regRubro)"><fa name="trash"></fa> Si</button>
+    <button class="btn" (click)="modalRef.hide()"><fa name="times"></fa> No</button>
+  </div>
+</ng-template>

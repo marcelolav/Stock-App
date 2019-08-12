@@ -1,1 +1,7 @@
-/* You can add global styles to this file, and also import other style files */
+/* Estilos Globales de la app */
+.inactivo {
+    background-color: gray;
+}
+.activo {
+    background-color: rgb(178, 221, 165);
+}

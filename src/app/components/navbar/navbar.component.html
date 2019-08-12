@@ -17,12 +17,15 @@
     <!-- Dropdown usuario logueado Operaciones -->
     <div class="btn-group ml-5" dropdown>
       <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle botlog mr-4" aria-controls="productos">
+          <fa name="cog" animation="spin"></fa>
         Configuración 
         <!-- <span class="caret"></span> -->
       </button>
       <ul id="productos" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
-        <li role="menuitem"><a class="dropdown-item" routerLink='abmproductos'>Productos</a></li>
-        <li role="menuitem"><a class="dropdown-item" routerLink='abmrubros'>Rubros</a></li>
+        <li role="menuitem"><a class="dropdown-item" routerLink='abmproveedores'><fa name="plus"></fa> ABM Proveedores</a></li>
+        <li role="menuitem"><a class="dropdown-item" routerLink='abmclientes'><fa name="plus"></fa> ABM Clientes</a></li>
+        <li role="menuitem"><a class="dropdown-item" routerLink='abmproductos'><fa name="plus"></fa> ABM Productos</a></li>
+        <li role="menuitem"><a class="dropdown-item" routerLink='abmrubros'><fa name="plus"></fa> ABM Rubros</a></li>
       </ul>
     </div>
   </div>

@@ -13,11 +13,13 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFirestore } from '@angular/fire/firestore';
 // Configuracion de entorno (Vea README.MD)
 import { environment } from '../environments/environment';
-
 // ngx-bootstrap
 import { BsDropdownModule } from 'ngx-bootstrap';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { ModalModule } from 'ngx-bootstrap/modal';
+// Font Awesome para angular
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 // Componentes
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -25,6 +27,8 @@ import { HomeComponent } from './components/home/home.component';
 import { AbmProductosComponent } from './components/abm-productos/abm-productos.component';
 import { AbmRubrosComponent } from './components/abm-rubros/abm-rubros.component';
 import { Page404Component } from './components/page404/page404.component';
+import { AbmProveedoresComponent } from './components/abm-proveedores/abm-proveedores.component';
+import { AbmClientesComponent } from './components/abm-clientes/abm-clientes.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +36,9 @@ import { Page404Component } from './components/page404/page404.component';
     HomeComponent,
     AbmProductosComponent,
     AbmRubrosComponent,
-    Page404Component
+    Page404Component,
+    AbmProveedoresComponent,
+    AbmClientesComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +51,9 @@ import { Page404Component } from './components/page404/page404.component';
     BrowserAnimationsModule,
     BsDropdownModule.forRoot(),
     ButtonsModule.forRoot(),
-    CollapseModule.forRoot()
+    CollapseModule.forRoot(),
+    ModalModule.forRoot(),
+    AngularFontAwesomeModule
   ],
   providers: [AngularFireAuth, AngularFirestore],
   bootstrap: [AppComponent]
