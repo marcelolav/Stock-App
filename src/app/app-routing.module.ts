@@ -7,6 +7,7 @@ import { AbmRubrosComponent } from './components/abm-rubros/abm-rubros.component
 import { Page404Component } from './components/page404/page404.component';
 import { AbmProveedoresComponent } from './components/abm-proveedores/abm-proveedores.component';
 import { AbmClientesComponent } from './components/abm-clientes/abm-clientes.component';
+import { ModuloCuitComponent } from './components/modulo-cuit/modulo-cuit.component';
 
 
 const routes: Routes = [
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'abmrubros', component: AbmRubrosComponent },
   { path: 'abmproveedores', component: AbmProveedoresComponent },
   { path: 'abmclientes', component: AbmClientesComponent },
+  { path: 'validarcuit', component: ModuloCuitComponent },
   { path: '**', component: Page404Component },
 ];
 

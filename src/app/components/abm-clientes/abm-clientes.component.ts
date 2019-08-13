@@ -28,13 +28,18 @@ export class AbmClientesComponent implements OnInit, OnDestroy {
   }
 
   agregarCliente(cliente: Cliente) {
-    this.cliSer.addCliente(cliente);
+    this.regCliente = {
+      nombre: cliente.nombre,
+      direccion: cliente.direccion,
+      telefono: cliente.telefono,
+      cuit: cliente.cuit
+    };
+    this.cliSer.addCliente(this.regCliente);
     this.regCliente = {} as Cliente;
     this.modalRef.hide();
   }
 
   confirmaEdicion(cliente: Cliente) {
-    console.log(cliente);
     this.cliSer.updateCliente(cliente);
     this.regCliente = {} as Cliente;
     this.modalRef.hide();

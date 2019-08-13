@@ -2,7 +2,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 // Rutas
 import { AppRoutingModule } from './app-routing.module';
 // Firestore
@@ -29,6 +30,7 @@ import { AbmRubrosComponent } from './components/abm-rubros/abm-rubros.component
 import { Page404Component } from './components/page404/page404.component';
 import { AbmProveedoresComponent } from './components/abm-proveedores/abm-proveedores.component';
 import { AbmClientesComponent } from './components/abm-clientes/abm-clientes.component';
+import { ModuloCuitComponent } from './components/modulo-cuit/modulo-cuit.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,13 +40,15 @@ import { AbmClientesComponent } from './components/abm-clientes/abm-clientes.com
     AbmRubrosComponent,
     Page404Component,
     AbmProveedoresComponent,
-    AbmClientesComponent
+    AbmClientesComponent,
+    ModuloCuitComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireStorageModule,

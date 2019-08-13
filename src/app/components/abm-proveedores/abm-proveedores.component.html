@@ -1,1 +1,142 @@
-<p>abm-proveedores works!</p>
+<div class="row mt-3 mb-3">
+    <button title="Agregar Proveedor" class="btn btn-success mr-2" (click)="openModal(altaProveedor, regProveedor)">
+      <fa name="plus-square"></fa>
+      Agregar Proveedor
+    </button>
+  </div>
+  <div class="row">
+    <table class="table mt-10">
+      <thead>
+        <th class="d-none">ID</th>
+        <th>Nombre</th>
+        <th>Dirección</th>
+        <th>Teléfono</th>
+        <th>C.U.I.T.</th>
+        <th>Acciones</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pr of proveedores">
+          <td class="d-none"> {{pr.id}} </td>
+          <td> {{pr.nombre}} </td>
+          <td> {{pr.direccion}} </td>
+          <td> {{pr.telefono}} </td>
+          <td> {{pr.cuit}} </td>
+          <td>
+            <button class="btn btn-info mr-3" (click)="openModal(editarProveedor,pr)">
+              <fa name="cog" animation="spin"></fa> Editar
+            </button>
+            <button class="btn btn-danger" (click)="openModal(eliminarProveedor, pr)">
+              <fa name="trash"></fa> Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <!-- Template para dar de alta un proveedor -->
+  <ng-template #altaProveedor>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Alta de Proveedor</h4>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="form-group row">
+          <input type="hidden" id="id" name="id" value="" [(ngModel)]="regProveedor.id">
+          <div class="col-md-6">
+            <label for="nombre">Nombre:</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="regProveedor.nombre">
+          </div>
+          <div class="col-md-6">
+            <label for="direccion">Direccion:</label>
+            <input type="text" class="form-control" id="direccion" name="direccion" [(ngModel)]="regProveedor.direccion">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-6">
+            <label for="telefono">Teléfono:</label>
+            <input type="text" class="form-control" id="telefono" name="telefono" [(ngModel)]="regProveedor.telefono">
+          </div>
+          <div class="col-md-6">
+            <label for="cuit">C.U.I.T.:</label>
+            <input type="text" class="form-control" id="cuit" name="cuit" [(ngModel)]="regProveedor.cuit">
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button (click)="agregarProveedor(regProveedor)" class="btn btn-primary">
+        <fa name="check"></fa> Guardar
+      </button>
+      <button class="btn btn-danger" (click)="modalRef.hide()">
+        <fa name="times"></fa> Cancelar
+      </button>
+    </div>
+  </ng-template>
+  <!-- Editar Proveedor -->
+  <ng-template #editarProveedor>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Editar Proveedor</h4>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="form-group row">
+          <input type="hidden" id="id" name="id" value="" [(ngModel)]="regProveedor.id">
+          <div class="col-md-6">
+            <label for="nombre">Nombre:</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="regProveedor.nombre">
+          </div>
+          <div class="col-md-6">
+            <label for="direccion">Direccion:</label>
+            <input type="text" class="form-control" id="direccion" name="direccion" [(ngModel)]="regProveedor.direccion">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-6">
+            <label for="telefono">Teléfono:</label>
+            <input type="text" class="form-control" id="telefono" name="telefono" [(ngModel)]="regProveedor.telefono">
+          </div>
+          <div class="col-md-6">
+            <label for="cuit">C.U.I.T.:</label>
+            <input type="text" class="form-control" id="cuit" name="cuit" [(ngModel)]="regProveedor.cuit">
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button (click)="confirmaEdicion(regProveedor)" class="btn btn-primary">
+        <fa name="check"></fa> Confirmar Edición
+      </button>
+      <button class="btn btn-danger" (click)="modalRef.hide()">
+        <fa name="times"></fa> Cancelar
+      </button>
+    </div>
+  </ng-template>
+  
+  <!-- Confirma Eliminar -->
+  <ng-template #eliminarProveedor>
+    <div class="modal-header">
+      <h3>Eliminar Proveedor</h3>
+    </div>
+    <div class="modal-body">
+      <strong>
+        <h5>PRECAUCION: Esta acción no puede revertirse</h5>
+      </strong>
+      Está a punto de eliminar el registro de Proveedor: <br>
+      <strong> {{regProveedor.nombre}} </strong> <br>
+      <strong> {{regProveedor.direccion}} </strong> <br>
+      <strong> {{regProveedor.telefono}} </strong> <br> 
+      <strong> {{regProveedor.cuit}} </strong> <br>
+       <br>
+      ¿Confirma Eliminación?
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger" (click)="confirmaEliminar(regProveedor)">
+        <fa name="trash"></fa> Si
+      </button>
+      <button class="btn" (click)="modalRef.hide()">
+        <fa name="times"></fa> No
+      </button>
+    </div>
+  </ng-template>
+  

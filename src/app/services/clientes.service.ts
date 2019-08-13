@@ -12,7 +12,7 @@ export class ClientesService {
   clientesDoc: AngularFirestoreDocument<Cliente>;
   clientes: Observable<Cliente[]>;
 
-  constructor(public afs: AngularFirestore) { 
+  constructor(public afs: AngularFirestore) {
     this.clientesCollection = this.afs.collection('clientes');
     this.clientes = this.clientesCollection
       .snapshotChanges()

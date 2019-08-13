@@ -37,12 +37,12 @@
 <!-- Template para dar de alta un cliente -->
 <ng-template #altaCliente>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Alta de Rubro</h4>
+    <h4 class="modal-title pull-left">Alta de Cliente</h4>
   </div>
   <div class="modal-body">
     <form>
       <div class="form-group row">
-        <!-- <input type="hidden" id="id" name="id" value="" [(ngModel)]="regCliente.id"> -->
+        <input type="hidden" id="id" name="id" value="" [(ngModel)]="regCliente.id">
         <div class="col-md-6">
           <label for="nombre">Nombre:</label>
           <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="regCliente.nombre">

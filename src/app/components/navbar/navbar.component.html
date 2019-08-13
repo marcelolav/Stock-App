@@ -29,4 +29,15 @@
       </ul>
     </div>
   </div>
+  <div class="btn-group ml-5" dropdown>
+    <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle botlog mr-4" aria-controls="productos">
+        <fa name="cog" animation="spin"></fa>
+      Consultas 
+      <!-- <span class="caret"></span> -->
+    </button>
+    <ul id="productos" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+      <li role="menuitem"><a class="dropdown-item" routerLink='validarcuit'><fa name="plus"></fa> Validar CUIT</a></li>
+    </ul>
+  </div>
+
 </nav> <!-- Fin de navegacion -->
