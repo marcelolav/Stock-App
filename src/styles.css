@@ -1,7 +1,46 @@
 /* Estilos Globales de la app */
 .inactivo {
-    background-color: gray;
+  background-color: gray;
 }
+
 .activo {
-    background-color: rgb(178, 221, 165);
+  background-color: rgb(178, 221, 165);
+}
+
+body {
+  background: #70e1f5;
+  background: -webkit-linear-gradient(to right, #ffd194, #70e1f5);
+  background: linear-gradient(to right, #ffd194, #70e1f5);
+
+}
+
+#imagenCubo img {
+  animation: rotate 3s infinite;
+  animation-name: rotate;
+  animation-duration: 3s;
+  animation-timing-function: ease;
+  animation-delay: 0s;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  animation-fill-mode: none;
+  animation-play-state: running;
+}
+
+@keyframes rotate {
+
+  0%,
+  100% {
+    transform: rotate(10deg);
+  }
+
+  50% {
+    transform: rotate(350deg);
+  }
+}
+
+#imagenCubo img:hover {
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  transform: rotate(-90deg);
 }

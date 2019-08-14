@@ -40,7 +40,7 @@ export class AbmProductosComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(res => { this.rubros = res; });
   }
-  
+
   openModal(template: TemplateRef<any>, data: any) {
     this.regProducto = {
       id: data.id,
@@ -64,8 +64,25 @@ export class AbmProductosComponent implements OnInit, OnDestroy {
     }
     producto.esOferta = this.ofertaboolean;  // Para saber si es true o false
     producto.id = '';
-    producto.urlImagen = '';
+    if (this.regProducto.urlImagen !== '') {
+      producto.urlImagen = this.regProducto.urlImagen;
+    } else {
+      producto.urlImagen = '';
+    }
     this.prodServ.addProducto(producto);
+    this.modalRef.hide();
+  }
+  openModalAlta(template: TemplateRef<any>, data: any) {
+    this.regProducto = { } as Producto;
+    this.modalRef = this.modalService.show(template);
+  }
+  editarProducto(producto: Producto) {
+    console.log(producto);
+    this.prodServ.updateProducto(producto);
+    this.modalRef.hide();
+  }
+  elimDefinitivaProducto(producto: Producto) {
+    this.prodServ.deleteProducto(producto);
     this.modalRef.hide();
   }
   ngOnDestroy() {
