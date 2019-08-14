@@ -31,6 +31,9 @@ import { Page404Component } from './components/page404/page404.component';
 import { AbmProveedoresComponent } from './components/abm-proveedores/abm-proveedores.component';
 import { AbmClientesComponent } from './components/abm-clientes/abm-clientes.component';
 import { ModuloCuitComponent } from './components/modulo-cuit/modulo-cuit.component';
+import { IngresosComponent } from './components/ingresos/ingresos.component';
+import { EgresoStockComponent } from './components/egreso-stock/egreso-stock.component';
+import { EgresoVentasComponent } from './components/egreso-ventas/egreso-ventas.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +44,10 @@ import { ModuloCuitComponent } from './components/modulo-cuit/modulo-cuit.compon
     Page404Component,
     AbmProveedoresComponent,
     AbmClientesComponent,
-    ModuloCuitComponent
+    ModuloCuitComponent,
+    IngresosComponent,
+    EgresoStockComponent,
+    EgresoVentasComponent
   ],
   imports: [
     BrowserModule,

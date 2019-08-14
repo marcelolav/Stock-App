@@ -4,4 +4,6 @@ export interface Cliente {
     direccion?: string;
     telefono?: string;
     cuit?: string;
+    creditoActual?: number;
+    creditoDisponible?: number;
 }
