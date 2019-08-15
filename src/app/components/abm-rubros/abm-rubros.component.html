@@ -16,8 +16,8 @@
       <tr *ngFor="let rb of rubros" [ngClass]="{'inactivo': !rb.activo, 'activo': rb.activo}">
         <td class="d-none"> {{rb.id}} </td>
         <td> {{rb.nombreRubro}} </td>
-        <td *ngIf="rb.activo"> Rubro Inactivo </td>
-        <td *ngIf="!rb.activo"> Rubro Activo </td>
+        <td *ngIf="rb.activo"> Rubro Activo </td>
+        <td *ngIf="!rb.activo"> Rubro Inactivo </td>
         <td>
           <button class="btn btn-info mr-3" (click)="openModal(editaRubro,rb)">
             <fa name="cog" animation="spin"></fa> Editar

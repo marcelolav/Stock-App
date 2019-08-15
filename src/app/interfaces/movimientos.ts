@@ -9,5 +9,5 @@ export interface Movimientos {
     cantidadEgreso: number;
     precioCompra: number;
     precioVenta: number;
-    notas: string;
+    notas?: string;
 }

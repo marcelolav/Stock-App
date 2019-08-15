@@ -1,1 +1,30 @@
-<p>ingresos works!</p>
+
+
+
+<!-- Tabla de ingresos completa sin filtro (Solo filtro los ingresos con ngif en cada td) -->
+<div class="row">
+  <table class="table mt-10">
+    <thead>
+      <th class="d-none">ID</th>
+      <th>Fecha</th>
+      <th>Tipo</th>
+      <th>Producto</th>
+      <th>Proveedor</th>
+      <th>Cantidad</th>
+      <th>Precio Compra</th>
+      <th>Precio Venta</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let mov of movimientos">
+        <td class="d-none" *ngIf="(mov.tipoMovimiento == 'Ingreso')"> {{mov.id}} </td>
+        <td *ngIf="(mov.tipoMovimiento == 'Ingreso')"> {{mov.fecha | date: 'dd/MM/yyyy'}} </td>
+        <td *ngIf="(mov.tipoMovimiento == 'Ingreso')"> {{mov.tipoMovimiento}} </td>
+        <td *ngIf="(mov.tipoMovimiento == 'Ingreso')"> {{mov.nombreProducto}} </td>
+        <td *ngIf="(mov.tipoMovimiento == 'Ingreso')"> {{mov.nombreProveedor}} </td>
+        <td *ngIf="(mov.tipoMovimiento == 'Ingreso')"> {{mov.cantidadIngreso | number: '0.2-2'}} </td>
+        <td *ngIf="(mov.tipoMovimiento == 'Ingreso')"> {{mov.precioCompra | currency:'$AR '}} </td>
+        <td *ngIf="(mov.tipoMovimiento == 'Ingreso')"> {{mov.precioVenta | currency:'$AR '}} </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
