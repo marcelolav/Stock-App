@@ -1,1 +1,34 @@
-<p>con-movimientos works!</p>
+<!-- Consulta de movimientos generales -->
+<!-- Tabla de ingresos completa sin filtro (Solo filtro los ingresos con ngif en cada td) -->
+<h3>Consulta de Movimientos General</h3>
+<div class="row mt-4">
+    <table class="table table-hover mt-10">
+      <thead class="text-center">
+        <th class="d-none">ID</th>
+        <th>Fecha</th>
+        <th>Tipo Movimiento</th>
+        <th>Producto</th>
+        <th>Proveedor</th>
+        <th>Cliente</th>
+        <th>Entrada</th>
+        <th>Salida</th>
+        <th>Precio Compra</th>
+        <th>Precio Venta</th>
+      </thead>
+      <tbody >
+        <tr *ngFor="let mov of movimientos" (click)="pruebaFuncion(mov)">
+          <td class="d-none" *ngIf="(mov.tipoMovimiento == 'Ingreso')"> {{mov.id}} </td>
+          <td class="text-center"> {{mov.fecha | date: 'dd/MM/yyyy'}} </td>
+          <td class="text-center"> {{mov.tipoMovimiento}} </td>
+          <td class="text-left"> {{mov.nombreProducto}} </td>
+          <td class="text-left"> {{mov.nombreProveedor}} </td>
+          <td class="text-left"> {{mov.nombreCliente}} </td>          
+          <td class="text-right"> {{mov.cantidadIngreso | number: '0.2-2'}} </td>
+          <td class="text-right"> {{mov.cantidadEgreso | number: '0.2-2'}} </td>
+          <td class="text-right"> {{mov.precioCompra | currency:'$AR '}} </td>
+          <td class="text-right"> {{mov.precioVenta | currency:'$AR '}} </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
