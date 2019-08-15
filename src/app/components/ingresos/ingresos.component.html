@@ -1,8 +1,46 @@
+<h3>Ingreso de Mercadería a Depósito</h3>
+<div class="row">
 
+  <form>
+    <div class="row">
+       
 
+      <div class="form-group mr-1">
+        <label for="fecha">Fecha:</label>
+        <input type="text" placeholder="Fecha" class="form-control" bsDatepicker name="fecha"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" [(ngModel)]="regIngreso.fecha">
+      </div>
+      <div class="form-group mr-1">
+        <label for="proveedor">Proveedor:</label>
+        <select name="proveedor" id="proveedor" class="form-control" name="nombreProveedor" [(ngModel)]="regIngreso.nombreProveedor">
+          <option *ngFor="let prov of proveedores" value="{{prov.nombre}}"> {{prov.nombre}} </option>
+        </select>
+      </div>
+      <div class="form-group mr-1">
+        <label for="producto">Producto:</label>
+        <select name="producto" id="producto" class="form-control" name="nombreProducto" [(ngModel)]="regIngreso.nombreProducto">
+          <option *ngFor="let prod of productos" value="{{prod.nombreProducto}}">{{prod.nombreProducto}} </option>
+        </select>
+      </div>
+      <div class="form-group mr-1">
+        <label for="cantidad">Cantidad</label>
+        <input type="number" id="cantidad" class="form-control" name="cantidadIngreso" [(ngModel)]="regIngreso.cantidadIngreso">
+      </div>
+      <div class="form-group mr-1">
+        <label for="precioCompra">Precio Compra</label>
+        <input type="number" id="precioCompra" class="form-control" name="precioCompra" [(ngModel)]="regIngreso.precioCompra">
+      </div>
+      <div class="form-group">
+        <label for="precioVenta">Precio Venta</label>
+        <input type="number" id="precioVenta" class="form-control" name="precioVenta" [(ngModel)]="regIngreso.precioVenta">
+      </div>
+    </div>
+    <button type="submit" (click)="ingresarStock(regIngreso)" class="btn btn-primary">Ingresar</button> 
+  </form>
+</div>
 
 <!-- Tabla de ingresos completa sin filtro (Solo filtro los ingresos con ngif en cada td) -->
-<div class="row">
+<div class="row mt-4">
   <table class="table mt-10">
     <thead>
       <th class="d-none">ID</th>

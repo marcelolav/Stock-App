@@ -19,6 +19,7 @@ import { BsDropdownModule } from 'ngx-bootstrap';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 // Font Awesome para angular
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 // Componentes
@@ -71,6 +72,7 @@ import { ConMovimientosComponent } from './components/con-movimientos/con-movimi
     ButtonsModule.forRoot(),
     CollapseModule.forRoot(),
     ModalModule.forRoot(),
+    BsDatepickerModule.forRoot(),
     AngularFontAwesomeModule
   ],
   providers: [AngularFireAuth, AngularFirestore],
