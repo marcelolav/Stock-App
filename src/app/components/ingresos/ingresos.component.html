@@ -1,41 +1,91 @@
 <h3>Ingreso de Mercadería a Depósito</h3>
+
 <div class="row">
+  <!-- Fecha y proveedor para ingresos -->
+  <div class="row">
+    <div class="form-group mr-2">
+      <label for="fecha">Fecha:</label>
+      <input type="text" placeholder="Fecha" class="form-control" bsDatepicker name="fecha"
+        [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" [(ngModel)]="encabezado.fecha">
+    </div>
+    <div class="form-group">
+      <label for="proveedor">Proveedor:</label>
+      <select name="proveedor" id="proveedor" class="form-control" style="width: 600px;" name="nombreProveedor"
+        [(ngModel)]="encabezado.nombreProveedor">
+        <option *ngFor="let prov of proveedores" value="{{prov.nombre}}"> {{prov.nombre}} </option>
+      </select>
+    </div>
+  </div>
+  <div class="row" *ngIf="items">
+    <table class="table">
+      <thead>
+        <th>#Item</th>
+        <th>Producto</th>
+        <th>Cantidad</th>
+        <th>Precio Compra</th>
+        <th>Precio Venta</th>
+        <th>Acciones</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of itemsDetalle; let i = index">
+          <td> {{i}}</td>
+          <td> {{item.nombreProducto}} </td>
+          <td> {{item.cantidadIngreso}} </td>
+          <td> {{item.precioCompra}} </td>
+          <td> {{item.precioVenta}} </td>
+          <td>
+            <button (click)="borraElementoDetalle(i, item.cantidadIngreso, item.precioCompra)">
+                <fa name="times"></fa>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+      <br>
+      <p>Total Productos: {{totalCantidad}}   Total Compra: {{totalCompra}} </p>
+    </table>
+  </div>
+</div>
+<button (click)="openModal(itemFacturaIngreso, encabezado)" class="btn btn-primary">Agregar Item</button>
+<ng-template #itemFacturaIngreso>
 
-  <form>
-    <div class="row">
-      <!-- Fecha y proveedor para ingresos -->
-      <div class="form-group mr-1">
-        <label for="fecha">Fecha:</label>
-        <input type="text" placeholder="Fecha" class="form-control" bsDatepicker name="fecha"
-          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" [(ngModel)]="regIngreso.fecha">
-      </div>
-      <div class="form-group mr-1">
-        <label for="proveedor">Proveedor:</label>
-        <select name="proveedor" id="proveedor" class="form-control" name="nombreProveedor" [(ngModel)]="regIngreso.nombreProveedor">
-          <option *ngFor="let prov of proveedores" value="{{prov.nombre}}"> {{prov.nombre}} </option>
-        </select>
-      </div>
-
-      <div class="form-group mr-1">
+  <div class="modal-header">
+    Ingreso de Item a stock
+  </div>
+  <div class="modal-body">
+    <p class="d-none">{{encabezado.fecha}}</p>
+    <p class="d-none">{{encabezado.proveedor}} </p>
+    <div class="row align-items-center">
+      <div class="form-group mr-1 col">
         <label for="producto">Producto:</label>
-        <select name="producto" id="producto" class="form-control" name="nombreProducto" [(ngModel)]="regIngreso.nombreProducto">
+        <select name="producto" id="producto" class="form-control" name="nombreProducto"
+          [(ngModel)]="detalle.nombreProducto">
           <option *ngFor="let prod of productos" value="{{prod.nombreProducto}}">{{prod.nombreProducto}} </option>
         </select>
       </div>
-      <div class="form-group mr-1">
+      <div class="form-group mr-1 col">
         <label for="cantidad">Cantidad</label>
-        <input type="number" id="cantidad" class="form-control" name="cantidadIngreso" [(ngModel)]="regIngreso.cantidadIngreso">
-      </div>
-      <div class="form-group mr-1">
-        <label for="precioCompra">Precio Compra</label>
-        <input type="number" id="precioCompra" class="form-control" name="precioCompra" [(ngModel)]="regIngreso.precioCompra">
-      </div>
-      <div class="form-group">
-        <label for="precioVenta">Precio Venta</label>
-        <input type="number" id="precioVenta" class="form-control" name="precioVenta" [(ngModel)]="regIngreso.precioVenta">
+        <input type="number" id="cantidad" class="form-control" name="cantidadIngreso"
+          [(ngModel)]="detalle.cantidadIngreso">
       </div>
     </div>
-    <button type="submit" (click)="ingresarStock(regIngreso)" class="btn btn-primary">Ingresar</button> 
-  </form>
-</div>
-
+    <div class="row align-items-center">
+      <div class="form-group mr-1 col">
+        <label for="precioCompra">Precio Compra</label>
+        <input type="number" id="precioCompra" class="form-control" name="precioCompra"
+          [(ngModel)]="detalle.precioCompra">
+      </div>
+      <div class="form-group col">
+        <label for="precioVenta">Precio Venta</label>
+        <input type="number" id="precioVenta" class="form-control" name="precioVenta" [(ngModel)]="detalle.precioVenta">
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button (click)="agregarItem(detalle)" class="btn btn-success">
+      <fa name="check"></fa> Agregar Item
+    </button>
+    <button (click)="modalRef.hide()" class="btn btn-danger">
+      <fa name="times"></fa> Cancelar
+    </button>
+  </div>
+</ng-template>

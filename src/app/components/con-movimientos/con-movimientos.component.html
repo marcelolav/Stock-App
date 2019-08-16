@@ -16,7 +16,11 @@
         <th>Precio Venta</th>
       </thead>
       <tbody >
-        <tr *ngFor="let mov of movimientos" (click)="pruebaFuncion(mov)">
+        <tr 
+          *ngFor="let mov of movimientos" 
+          (click)="pruebaFuncion(mov)"
+          [ngClass]="{'ingreso': mov.tipoMovimiento === 'Ingreso', 'egreso': mov.tipoMovimiento.includes('EG')}"
+        >
           <td class="d-none" *ngIf="(mov.tipoMovimiento == 'Ingreso')"> {{mov.id}} </td>
           <td class="text-center"> {{mov.fecha | date: 'dd/MM/yyyy'}} </td>
           <td class="text-center"> {{mov.tipoMovimiento}} </td>

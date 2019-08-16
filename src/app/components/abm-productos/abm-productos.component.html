@@ -5,46 +5,55 @@
   </button>
 </div>
 <div class="row">
-  <table class="table mt-10">
-    <thead>
-      <th class="d-none">ID</th>
-      <th>Nombre Producto</th>
-      <th>Rubro</th>
-      <th>Proveedor</th>
-      <th>Existencia</th>
-      <th>Precio Compra</th>
-      <th>Precio Venta</th>
-      <th>Oferta</th>
-      <th>Foto</th>
-      <th>Acciones</th>
-      <!-- <th>Imagen</th> -->
-    </thead>
-    <tbody>
-      <tr *ngFor="let pr of productos">
-        <td class="d-none"> {{pr.id}} </td>
-        <td class="d-none"> {{pr.urlImagen}} </td>
-        <td> {{pr.nombreProducto}} </td>
-        <td> {{pr.nombreRubro}} </td>
-        <td> {{pr.proveedor}} </td>
-        <td> {{pr.existencia}} </td>
-        <td> {{pr.precioCompra}} </td>
-        <td> {{pr.precioVenta}} </td>
-        <td> {{pr.esOferta}} </td>
-        <td *ngIf="(pr.urlImagen !== '')"> 
-          <button class="btn btn-sm btn-primary" (click)= "openModal(verImagen, pr)"><fa name="camera"></fa></button>
-          
-        </td>
-        <td>
-          <button class="btn btn-info mr-3" (click)="openModal(edicionProducto,pr)">
-            <fa name="cog" animation="spin"></fa> Editar
-          </button>
-          <button class="btn btn-danger" (click)="openModal(eliminarProducto, pr)">
-            <fa name="trash"></fa> Eliminar
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="table-responsive">
+    <table class="table mt-10">
+      <thead class="text-center">
+        <th class="d-none">ID</th>
+        <th>Nombre Producto</th>
+        <th>Rubro</th>
+        <th>Proveedor</th>
+        <th>Existencia</th>
+        <th>Precio Compra</th>
+        <th>Precio Venta</th>
+        <th>Oferta</th>
+        <th>Foto</th>
+        <th>Acciones</th>
+        <!-- <th>Imagen</th> -->
+      </thead>
+      <tbody>
+        <tr *ngFor="let pr of productos" [ngClass]="{'precioOferta': pr.esOferta, 'precioComun': !pr.esOferta}">
+          <td class="d-none"> {{pr.id}} </td>
+          <td class="d-none"> {{pr.urlImagen}} </td>
+          <td> {{pr.nombreProducto}} </td>
+          <td> {{pr.nombreRubro}} </td>
+          <td> {{pr.proveedor}} </td>
+          <td class="text-right"> {{pr.existencia | number: '0.2-2'}} </td>
+          <td class="text-right"> {{pr.precioCompra | currency:'$AR '}} </td>
+          <td class="text-right"> {{pr.precioVenta | currency:'$AR '}} </td>
+          <td *ngIf="pr.esOferta" class="text-center">
+            <fa name="check-circle"></fa>
+          </td>
+          <td *ngIf="!pr.esOferta" class="text-center">
+            <fa name="window-close"></fa>
+          </td>
+          <td *ngIf="(pr.urlImagen !== '')">
+            <button class="btn btn-sm btn-primary" (click)="openModal(verImagen, pr)">
+              <fa name="camera"></fa>
+            </button>
+
+          </td>
+          <td>
+            <button class="btn btn-info mr-3" (click)="openModal(edicionProducto,pr)">
+              <fa name="cog" animation="spin"></fa> Editar
+            </button>
+            <button class="btn btn-danger" (click)="openModal(eliminarProducto, pr)">
+              <fa name="trash"></fa> Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 
@@ -65,7 +74,7 @@
       <div class="form-group row">
         <div class="col-md-6">
           <label for="rubro">Rubro:</label>
-          <select class="form-control" id="rubro" name="rubro" [(ngModel)]="regProducto.nombreRubro" >
+          <select class="form-control" id="rubro" name="rubro" [(ngModel)]="regProducto.nombreRubro">
             <option *ngFor="let rb of rubros">{{rb.nombreRubro}}</option>
           </select>
         </div>
@@ -79,21 +88,24 @@
       <div class="form-group row">
         <div class="col-md-4">
           <label for="existencia">Existencia Inicial:</label>
-          <input type="number" id="existencia" name="existencia" class="form-control" [(ngModel)]="regProducto.existencia">
+          <input type="number" id="existencia" name="existencia" class="form-control"
+            [(ngModel)]="regProducto.existencia">
         </div>
         <div class="col-md-4">
           <label for="precioCompra">Precio Compra:</label>
-          <input type="number" id="precioCompra" name="precioCompra" class="form-control" [(ngModel)]="regProducto.precioCompra">
+          <input type="number" id="precioCompra" name="precioCompra" class="form-control"
+            [(ngModel)]="regProducto.precioCompra">
         </div>
         <div class="col-md-4">
           <label for="precioVenta">Precio Venta:</label>
-          <input type="number" id="precioVenta" name="precioVenta" class="form-control" [(ngModel)]="regProducto.precioVenta">
+          <input type="number" id="precioVenta" name="precioVenta" class="form-control"
+            [(ngModel)]="regProducto.precioVenta">
         </div>
       </div>
       <div class="form-group row">
         <div class="col-md-6">
           <label for="rubro">Precio/Oferta:</label>
-          <select class="form-control" id="rubro" name="esOferta"  [(ngModel)]="regProducto.esOferta">
+          <select class="form-control" id="rubro" name="esOferta" [(ngModel)]="regProducto.esOferta">
             <option value="true">Oferta</option>
             <option value="false">Precio Estandar</option>
           </select>
@@ -123,7 +135,7 @@
   </div>
   <div class="modal-body text-center">
     <img src="{{regProducto.urlImagen}}" alt="{{regProducto.nombreProducto}}" width="200px">
-    <p>Precio: $ {{regProducto.precioVenta}}  Existencia: {{regProducto.existencia}}</p>
+    <p>Precio: $ {{regProducto.precioVenta}} Existencia: {{regProducto.existencia}}</p>
   </div>
 
   <div class="modal-footer">
@@ -133,91 +145,96 @@
 
 <!-- Template para editar producto -->
 <ng-template #edicionProducto>
-    <div class="modal-header">
-      <h4 class="modal-title pull-left">Editar Producto</h4>
-    </div>
-    <div class="modal-body">
-      <form>
-        <div class="form-group row">
-          <input type="hidden" id="id" name="id" value="" [(ngModel)]="regProducto.id">
-          <div class="col">
-            <label for="nombre">Nombre/Descripción:</label>
-            <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="regProducto.nombreProducto">
-          </div>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Editar Producto</h4>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group row">
+        <input type="hidden" id="id" name="id" value="" [(ngModel)]="regProducto.id">
+        <div class="col">
+          <label for="nombre">Nombre/Descripción:</label>
+          <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="regProducto.nombreProducto">
         </div>
-        <div class="form-group row">
-          <div class="col-md-6">
-            <label for="rubro">Rubro:</label>
-            <select class="form-control" id="rubro" name="rubro" [(ngModel)]="regProducto.nombreRubro" >
-              <option *ngFor="let rb of rubros">{{rb.nombreRubro}}</option>
-            </select>
-          </div>
-          <div class="col-md-6">
-            <label for="rubro">Proveedor:</label>
-            <select class="form-control" id="rubro" name="proveedor" [(ngModel)]="regProducto.proveedor">
-              <option *ngFor="let prv of proveedores">{{prv.nombre}}</option>
-            </select>
-          </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label for="rubro">Rubro:</label>
+          <select class="form-control" id="rubro" name="rubro" [(ngModel)]="regProducto.nombreRubro">
+            <option *ngFor="let rb of rubros">{{rb.nombreRubro}}</option>
+          </select>
         </div>
-        <div class="form-group row">
-          <div class="col-md-4">
-            <label for="existencia">Existencia Inicial:</label>
-            <input type="number" id="existencia" name="existencia" class="form-control" [(ngModel)]="regProducto.existencia">
-          </div>
-          <div class="col-md-4">
-            <label for="precioCompra">Precio Compra:</label>
-            <input type="number" id="precioCompra" name="precioCompra" class="form-control" [(ngModel)]="regProducto.precioCompra">
-          </div>
-          <div class="col-md-4">
-            <label for="precioVenta">Precio Venta:</label>
-            <input type="number" id="precioVenta" name="precioVenta" class="form-control" [(ngModel)]="regProducto.precioVenta">
-          </div>
+        <div class="col-md-6">
+          <label for="rubro">Proveedor:</label>
+          <select class="form-control" id="rubro" name="proveedor" [(ngModel)]="regProducto.proveedor">
+            <option *ngFor="let prv of proveedores">{{prv.nombre}}</option>
+          </select>
         </div>
-        <div class="form-group row">
-          <div class="col-md-6">
-            <label for="rubro">Precio/Oferta:</label>
-            <select class="form-control" id="rubro" name="esOferta"  [(ngModel)]="regProducto.esOferta">
-              <option value="true">Oferta</option>
-              <option value="false">Precio Estandar</option>
-            </select>
-          </div>
-          <div class="col-md-6">
-            <label for="imagen">URL Imágen</label>
-            <input type="text" class="form-control" id="imagen" name="urlImagen" [(ngModel)]="regProducto.urlImagen">
-          </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-md-4">
+          <label for="existencia">Existencia Inicial:</label>
+          <input type="number" id="existencia" name="existencia" class="form-control"
+            [(ngModel)]="regProducto.existencia">
         </div>
-      </form>
-    </div>
-    <div class="modal-footer">
-      <button (click)="editarProducto(regProducto)" class="btn btn-primary">
-        <fa name="check"></fa> Guardar
-      </button>
-      <button class="btn btn-danger" (click)="modalRef.hide()">
-        <fa name="times"></fa> Cancelar
-      </button>
-    </div>
-  </ng-template>
-  
-  <!-- Template eliminarProducto -->
-  <ng-template #eliminarProducto>
-    <div class="modal-header">
-      <h4>PRECAUCION: Eliminar Producto</h4>
-    </div>
-    <div class="modal-body text-center">
-      <h5>PRECAUCION Esta acción no se puede deshacer!</h5>
-      <p>Está a punto de eliminar un producto, esto no puede deshacerse. Tenga en cuenta que si existen movimientos de este producto no podrán referenciarse,  esta acción no es recomendada. Verifique antes de eliminar el producto que este no tenga movimientos.</p>
-      <br>
-      <p> <strong> Producto a dar de baja:</strong> </p> 
-      <p> Nombre: {{regProducto.nombre}} </p>
-      <p> Rubro: {{regProducto.nombreRubro}} </p> 
-      <p> Proveedor: {{regProducto.proveedor}} </p>
-      <p> Existencia: {{regProducto.existencia}} Unidades</p>
+        <div class="col-md-4">
+          <label for="precioCompra">Precio Compra:</label>
+          <input type="number" id="precioCompra" name="precioCompra" class="form-control"
+            [(ngModel)]="regProducto.precioCompra">
+        </div>
+        <div class="col-md-4">
+          <label for="precioVenta">Precio Venta:</label>
+          <input type="number" id="precioVenta" name="precioVenta" class="form-control"
+            [(ngModel)]="regProducto.precioVenta">
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label for="rubro">Precio/Oferta:</label>
+          <select class="form-control" id="rubro" name="esOferta" [(ngModel)]="regProducto.esOferta">
+            <option value="true">Oferta</option>
+            <option value="false">Precio Estandar</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label for="imagen">URL Imágen</label>
+          <input type="text" class="form-control" id="imagen" name="urlImagen" [(ngModel)]="regProducto.urlImagen">
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button (click)="editarProducto(regProducto)" class="btn btn-primary">
+      <fa name="check"></fa> Guardar
+    </button>
+    <button class="btn btn-danger" (click)="modalRef.hide()">
+      <fa name="times"></fa> Cancelar
+    </button>
+  </div>
+</ng-template>
 
-      <br>
-      <p><strong>¿Quiere realizar la eliminación teniendo en cuenta lo anteriormente citado?</strong></p>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-danger" (click)="elimDefinitivaProducto(regProducto)">Si, Eliminar</button>
-      <button class="btn btn-primary" (click)="modalRef.hide()">CANCELAR</button>
-    </div>
-  </ng-template>
+<!-- Template eliminarProducto -->
+<ng-template #eliminarProducto>
+  <div class="modal-header">
+    <h4>PRECAUCION: Eliminar Producto</h4>
+  </div>
+  <div class="modal-body text-center">
+    <h5>PRECAUCION Esta acción no se puede deshacer!</h5>
+    <p>Está a punto de eliminar un producto, esto no puede deshacerse. Tenga en cuenta que si existen movimientos de
+      este producto no podrán referenciarse, esta acción no es recomendada. Verifique antes de eliminar el producto que
+      este no tenga movimientos.</p>
+    <br>
+    <p> <strong> Producto a dar de baja:</strong> </p>
+    <p> Nombre: {{regProducto.nombre}} </p>
+    <p> Rubro: {{regProducto.nombreRubro}} </p>
+    <p> Proveedor: {{regProducto.proveedor}} </p>
+    <p> Existencia: {{regProducto.existencia}} Unidades</p>
+
+    <br>
+    <p><strong>¿Quiere realizar la eliminación teniendo en cuenta lo anteriormente citado?</strong></p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-danger" (click)="elimDefinitivaProducto(regProducto)">Si, Eliminar</button>
+    <button class="btn btn-primary" (click)="modalRef.hide()">CANCELAR</button>
+  </div>
+</ng-template>
