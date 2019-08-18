@@ -11,6 +11,7 @@ export class ProductosService {
   productosCollection: AngularFirestoreCollection<Producto>;
   productosDoc: AngularFirestoreDocument<Producto>;
   productos: Observable<Producto[]>;
+  nombreProducto: string;
 
   constructor(public afs: AngularFirestore) { 
     this.productosCollection = this.afs.collection('productos');
@@ -37,5 +38,15 @@ export class ProductosService {
   deleteProducto(producto: Producto) {
     this.productosDoc = this.afs.doc(`productos/${producto.id}`);
     this.productosDoc.delete();
+  }
+  updatePrecioProducto(idProducto, precioNuevo) {
+    this.productosDoc = this.afs.doc(`productos/${idProducto}`);
+    this.productosDoc.update({
+      precioCompra: precioNuevo
+    });
+  }
+  devuelvoNombreProducto(id) {
+    
+    // return nombre
   }
 }

@@ -49,13 +49,24 @@ export class IngresosComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(res => { this.movimientos = res; });
   }
-  agregarItem(data) {
-    this.items = true;
-    this.itemsDetalle.push(data);
-    this.totalCantidad = this.totalCantidad + data.cantidadIngreso;
-    this.totalCompra = this.totalCompra + data.precioCompra;
-    this.detalle = {};
-    console.log(this.itemsDetalle);
+  agregarItem(data, prov) {
+    console.log('Encabezado:',prov);
+    console.log('Datos Linea:',data);
+    if (Object.keys(data).length < 4 ) {
+      console.log('objeto vacio! o no estan todos los campos');
+    } else {
+      data.idProducto2 = data.idProducto.split(',')[0];
+      data.nombreProducto2 = data.idProducto.split(',')[1].trim();
+      this.movimientos = Object.assign(data, prov);
+      // const nombreProducto = this.prdSer.devuelvoNombreProducto(data.idProducto);
+      // console.log(nombreProducto);
+      this.items = true;
+      this.itemsDetalle.push(this.movimientos);
+      this.totalCantidad = this.totalCantidad + data.cantidadIngreso;
+      this.totalCompra = this.totalCompra + data.precioCompra;
+      this.detalle = {};
+      console.log(this.itemsDetalle);
+    }
   }
   borraElementoDetalle(i, tcant, timporte) {
     console.log(i)
@@ -71,9 +82,18 @@ export class IngresosComponent implements OnInit, OnDestroy {
   openModal(template: TemplateRef<any>, data: any) {
     this.encabezado = {
       fecha: data.fecha,
-      proveedor: data.nombreProveedor
+      proveedor: data.nombreProveedor,
+      comprobante: data.comprobante
     }
     this.modalRef = this.modalService.show(template);
+  }
+  comboProductos(datos) {
+    console.log(datos)
+  }
+  calcularCompra(dato: any) {
+    const numero = +dato.target.value;
+    this.detalle.precioCompra = numero * this.detalle.cantidadIngreso;
+    console.log(this.detalle.precioCompra);
   }
   ngOnDestroy() {
     this.unsubscribe.next();
