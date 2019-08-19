@@ -37,7 +37,7 @@ export class IngresosComponent implements OnInit, OnDestroy {
     private prvSer: ProveedoresService,
     private modalService: BsModalService
   ) { }
-
+  // Inicializo los combos con las respectivas cosas
   ngOnInit() {
     this.prdSer.getProductos()
       .pipe(takeUntil(this.unsubscribe))
@@ -49,23 +49,27 @@ export class IngresosComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(res => { this.movimientos = res; });
   }
+  // Agrega el item de movimiento a la lista temporal Parametros:(ARRAYs: itemsDetalle / encabezado)
   agregarItem(data, prov) {
-    console.log('Encabezado:',prov);
-    console.log('Datos Linea:',data);
+    console.log('Datos Linea:', data);
+    console.log('Encabezado:', prov);
     if (Object.keys(data).length < 4 ) {
       console.log('objeto vacio! o no estan todos los campos');
     } else {
       data.idProducto2 = data.idProducto.split(',')[0];
       data.nombreProducto2 = data.idProducto.split(',')[1].trim();
       this.movimientos = Object.assign(data, prov);
-      // const nombreProducto = this.prdSer.devuelvoNombreProducto(data.idProducto);
-      // console.log(nombreProducto);
       this.items = true;
       this.itemsDetalle.push(this.movimientos);
       this.totalCantidad = this.totalCantidad + data.cantidadIngreso;
       this.totalCompra = this.totalCompra + data.precioCompra;
       this.detalle = {};
-      console.log(this.itemsDetalle);
+      this.encabezado = {
+        fecha: data.fecha,
+        nombreProveedor: data.nombreProveedor,
+        comprobante: data.comprobante
+      };
+      console.log('ItemsDetalle:', this.itemsDetalle);
     }
   }
   borraElementoDetalle(i, tcant, timporte) {
@@ -80,15 +84,16 @@ export class IngresosComponent implements OnInit, OnDestroy {
     this.items = false;
   }
   openModal(template: TemplateRef<any>, data: any) {
+    console.log(data);
     this.encabezado = {
       fecha: data.fecha,
-      proveedor: data.nombreProveedor,
+      nombreProveedor: data.nombreProveedor,
       comprobante: data.comprobante
-    }
+    };
     this.modalRef = this.modalService.show(template);
-  }
-  comboProductos(datos) {
-    console.log(datos)
+    this.modalRef.setClass('modal-lg');
+    console.log('Sale de openmodal:', data);
+    console.log('salida openmodal encabezado: ', this.encabezado);
   }
   calcularCompra(dato: any) {
     const numero = +dato.target.value;

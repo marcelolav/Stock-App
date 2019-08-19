@@ -35,10 +35,10 @@
         <tr *ngFor="let item of itemsDetalle; let i = index">
           <td> {{i}}</td>
           <td> {{item.nombreProducto2}} </td>
-          <td> {{item.cantidadIngreso}} </td>
-          <td> {{item.precioUnitario}} </td>
-          <td> {{item.precioCompra}} </td>
-          <td> {{item.precioVenta}} </td>
+          <td> {{item.cantidadIngreso | number:'0.2-2'}} </td>
+          <td> {{item.precioUnitario | number:'0.2-2'}} </td>
+          <td> {{item.precioCompra | number:'0.2-2'}} </td>
+          <td> {{item.precioVenta | number:'0.2-2'}} </td>
           <td>
             <button (click)="borraElementoDetalle(i, item.cantidadIngreso, item.precioCompra)">
               <fa name="times"></fa>
@@ -46,22 +46,23 @@
           </td>
         </tr>
       </tbody>
-      <br>
+      <hr>
       <p>Total Productos: {{totalCantidad}} Total Compra: {{totalCompra}} </p>
     </table>
   </div>
 </div>
+<button *ngIf="items" (click)="openModal(confirmaIngresoTotal, movimientos)" class="btn btn-primary">Confirmar Ingreso</button>
 <button (click)="openModal(itemFacturaIngreso, encabezado)" class="btn btn-primary">Agregar Item</button>
 
 <!-- Agrega item de factura -->
 <ng-template #itemFacturaIngreso>
-
   <div class="modal-header">
     <h3>Ingreso a stock</h3>
   </div>
   <div class="modal-body">
-
-
+    <input type="hidden" [(ngModel)]="encabezado.fecha" name="fecha" readonly>
+    <input type="hidden" [(ngModel)]="encabezado.nombreProveedor" name="nombreProveedor" readonly>
+    <input type="hidden" [(ngModel)]="encabezado.comprobante" name="comprobante" readonly>
     <div class="row align-items-center">
       <div class="form-group mr-1 col">
         <label for="producto">Producto:</label>
@@ -81,8 +82,7 @@
       <div class="form-group mr-1 col">
         <label for="precioUnitario">Precio Unitario</label>
         <input type="number" id="precioUnitario" class="form-control" name="precioUnitario"
-          [(ngModel)]="detalle.precioUnitario"
-          (focusout)="calcularCompra($event)">
+          [(ngModel)]="detalle.precioUnitario" (focusout)="calcularCompra($event)">
       </div>
       <div class="form-group mr-1 col">
         <label for="precioCompra">Precio Compra</label>
@@ -105,4 +105,43 @@
       <fa name="times"></fa> Cancelar
     </button>
   </div>
+</ng-template>
+
+<ng-template #confirmaIngresoTotal>
+  <div class="modal-header border border-primary" >
+    <p>Confirme Comprobante de ingreso:</p>
+      <span>
+        <h5>Fecha: {{encabezado.fecha | date: 'dd/MM/yyyy'}} </h5>
+        <h5>Proveedor: {{encabezado.nombreProveedor}} </h5>
+        <h5>Comprobante: {{encabezado.comprobante}}</h5>
+      </span>
+  </div>
+  <div class="modal-body border border-primary">
+    <table class="table table-bordered">
+      <thead class="text-center">
+        <th> # </th>
+        <th>Producto</th>
+        <th>Cantidad</th>
+        <th>P.Unit.</th>
+        <th>Importe</th>
+        <th>P.Venta</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of itemsDetalle; let i = index">
+          <td> {{i}}</td>
+          <td class="text-left"> {{item.nombreProducto2}} </td>
+          <td class="text-right"> {{item.cantidadIngreso | number:'0.2-2'}} </td>
+          <td class="text-right"> {{item.precioUnitario | number:'0.2-2'}} </td>
+          <td class="text-right"> {{item.precioCompra | number:'0.2-2'}} </td>
+          <td class="text-right"> {{item.precioVenta | number:'0.2-2'}} </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="modal-footer">
+    <p>Total Productos: {{totalCantidad}} Total Compra: {{totalCompra}} </p>
+    <button class="btn btn-primary">Confirmar</button>
+    <button class="btn btn-danger">Cancelar</button>
+  </div>
+
 </ng-template>
