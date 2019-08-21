@@ -31,7 +31,6 @@ export class ClientesService {
     this.clientesCollection.add(cliente);
   }
   updateCliente(cliente: Cliente) {
-    console.log(cliente);
     this.clientesDoc = this.afs.doc(`clientes/${cliente.id}`);
     this.clientesDoc.update(cliente);
   }

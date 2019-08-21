@@ -39,14 +39,17 @@ export class ProductosService {
     this.productosDoc = this.afs.doc(`productos/${producto.id}`);
     this.productosDoc.delete();
   }
-  updatePrecioProducto(idProducto, precioNuevo) {
+  updatePrecioProducto(idProducto, precioNuevoCompra, precioNuevoVenta) {
     this.productosDoc = this.afs.doc(`productos/${idProducto}`);
     this.productosDoc.update({
-      precioCompra: precioNuevo
+      precioCompra: precioNuevoCompra,
+      precioVenta: precioNuevoVenta
     });
   }
-  devuelvoNombreProducto(id) {
-    
-    // return nombre
+  updateExistencia(idProducto, nuevaExistencia) {
+    this.productosDoc = this.afs.doc(`productos/${idProducto}`);
+    this.productosDoc.update({
+      existencia: nuevaExistencia
+    });
   }
 }

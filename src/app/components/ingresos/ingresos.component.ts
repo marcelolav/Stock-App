@@ -51,40 +51,35 @@ export class IngresosComponent implements OnInit, OnDestroy {
   }
   // Agrega el item de movimiento a la lista temporal Parametros:(ARRAYs: itemsDetalle / encabezado)
   agregarItem(data, prov) {
-    console.log('Datos Linea:', data);
-    console.log('Encabezado:', prov);
     if (Object.keys(data).length < 4 ) {
       console.log('objeto vacio! o no estan todos los campos');
     } else {
       data.idProducto2 = data.idProducto.split(',')[0];
       data.nombreProducto2 = data.idProducto.split(',')[1].trim();
+      data.existenciaProducto = +data.idProducto.split(',')[2];
       this.movimientos = Object.assign(data, prov);
       this.items = true;
       this.itemsDetalle.push(this.movimientos);
       this.totalCantidad = this.totalCantidad + data.cantidadIngreso;
       this.totalCompra = this.totalCompra + data.precioCompra;
+
       this.detalle = {};
       this.encabezado = {
         fecha: data.fecha,
         nombreProveedor: data.nombreProveedor,
         comprobante: data.comprobante
       };
-      console.log('ItemsDetalle:', this.itemsDetalle);
     }
   }
   borraElementoDetalle(i, tcant, timporte) {
-    console.log(i)
     this.totalCantidad = this.totalCantidad - tcant;
     this.totalCompra = this.totalCompra - timporte;
     this.itemsDetalle.splice(i, 1);
   }
   ingresarStock(dato) {
-
-    console.log(dato);
     this.items = false;
   }
   openModal(template: TemplateRef<any>, data: any) {
-    console.log(data);
     this.encabezado = {
       fecha: data.fecha,
       nombreProveedor: data.nombreProveedor,
@@ -92,13 +87,39 @@ export class IngresosComponent implements OnInit, OnDestroy {
     };
     this.modalRef = this.modalService.show(template);
     this.modalRef.setClass('modal-lg');
-    console.log('Sale de openmodal:', data);
-    console.log('salida openmodal encabezado: ', this.encabezado);
   }
   calcularCompra(dato: any) {
     const numero = +dato.target.value;
     this.detalle.precioCompra = numero * this.detalle.cantidadIngreso;
-    console.log(this.detalle.precioCompra);
+  }
+  confirmaDefinitiva(enc, it, tcant, tcomp) {
+    it.forEach(item => {
+      const datoTotal = Object.assign(enc, item);
+      this.regIngreso = {
+        fecha: datoTotal.fecha,
+        comprobante: datoTotal.comprobante,
+        tipoMovimiento: 'Ingreso',
+        idProducto: datoTotal.idProducto2,
+        nombreProducto: datoTotal.nombreProducto2,
+        nombreProveedor: datoTotal.nombreProveedor,
+        nombreCliente: '-',
+        cantidadEgreso: 0,
+        cantidadIngreso: datoTotal.cantidadIngreso,
+        precioUnitario: datoTotal.precioUnitario,
+        precioCompra: datoTotal.precioUnitario,
+        precioVenta: datoTotal.precioVenta
+      };
+      this.movSer.addMovimiento(this.regIngreso);
+      const cantidadActualizar = item.existenciaProducto + datoTotal.cantidadIngreso;
+      this.prdSer.updatePrecioProducto(
+        this.regIngreso.idProducto,
+        this.regIngreso.precioCompra,
+        this.regIngreso.precioVenta);
+      this.prdSer.updateExistencia(
+        this.regIngreso.idProducto,
+        cantidadActualizar
+      );
+    });
   }
   ngOnDestroy() {
     this.unsubscribe.next();

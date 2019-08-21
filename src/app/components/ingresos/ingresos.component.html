@@ -51,7 +51,8 @@
     </table>
   </div>
 </div>
-<button *ngIf="items" (click)="openModal(confirmaIngresoTotal, movimientos)" class="btn btn-primary">Confirmar Ingreso</button>
+<button *ngIf="items" (click)="openModal(confirmaIngresoTotal, movimientos)" class="btn btn-primary">Confirmar
+  Ingreso</button>
 <button (click)="openModal(itemFacturaIngreso, encabezado)" class="btn btn-primary">Agregar Item</button>
 
 <!-- Agrega item de factura -->
@@ -60,15 +61,15 @@
     <h3>Ingreso a stock</h3>
   </div>
   <div class="modal-body">
-    <input type="hidden" [(ngModel)]="encabezado.fecha" name="fecha" readonly>
-    <input type="hidden" [(ngModel)]="encabezado.nombreProveedor" name="nombreProveedor" readonly>
-    <input type="hidden" [(ngModel)]="encabezado.comprobante" name="comprobante" readonly>
+    <input type="hidden" [(ngModel)]="encabezado.fecha" name="fecha">
+    <input type="hidden" [(ngModel)]="encabezado.nombreProveedor" name="nombreProveedor">
+    <input type="hidden" [(ngModel)]="encabezado.comprobante" name="comprobante">
     <div class="row align-items-center">
       <div class="form-group mr-1 col">
         <label for="producto">Producto:</label>
         <select name="producto" id="producto" class="form-control" name="nombreProducto"
           [(ngModel)]="detalle.idProducto">
-          <option *ngFor="let prod of productos" value="{{prod.id}}, {{prod.nombreProducto}}">{{prod.nombreProducto}}
+          <option *ngFor="let prod of productos" value="{{prod.id}}, {{prod.nombreProducto}}, {{prod.existencia}}">{{prod.nombreProducto}}
           </option>
         </select>
       </div>
@@ -108,13 +109,13 @@
 </ng-template>
 
 <ng-template #confirmaIngresoTotal>
-  <div class="modal-header border border-primary" >
+  <div class="modal-header border border-primary">
     <p>Confirme Comprobante de ingreso:</p>
-      <span>
-        <h5>Fecha: {{encabezado.fecha | date: 'dd/MM/yyyy'}} </h5>
-        <h5>Proveedor: {{encabezado.nombreProveedor}} </h5>
-        <h5>Comprobante: {{encabezado.comprobante}}</h5>
-      </span>
+    <span>
+      <h5>Fecha: {{encabezado.fecha | date: 'dd/MM/yyyy'}} </h5>
+      <h5>Proveedor: {{encabezado.nombreProveedor}} </h5>
+      <h5>Comprobante: {{encabezado.comprobante}}</h5>
+    </span>
   </div>
   <div class="modal-body border border-primary">
     <table class="table table-bordered">
@@ -137,10 +138,22 @@
         </tr>
       </tbody>
     </table>
+    <table class="table table-bordered">
+      <tbody>
+        <tr>
+          <td style="width: 70%" class="text-right">Cantidad:</td>
+          <td style="width: 30%" class="text-right">{{totalCantidad | number:'0.2-2'}}</td>
+        </tr>
+        <tr>
+          <td style="width: 70%" class="text-right">Importe Total:</td>
+          <td style="width: 30%" class="text-right">{{totalCompra | number:'0.2-2'}}</td>
+        </tr>
+      </tbody>
+    </table>
+
   </div>
   <div class="modal-footer">
-    <p>Total Productos: {{totalCantidad}} Total Compra: {{totalCompra}} </p>
-    <button class="btn btn-primary">Confirmar</button>
+    <button class="btn btn-primary" (click)="confirmaDefinitiva(encabezado, itemsDetalle, totalCantidad, totalCompra)">Confirmar</button>
     <button class="btn btn-danger">Cancelar</button>
   </div>
 
