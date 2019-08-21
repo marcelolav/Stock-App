@@ -18,11 +18,10 @@
       <tbody >
         <tr 
           *ngFor="let mov of movimientos" 
-          (click)="pruebaFuncion(mov)"
           [ngClass]="{'ingreso': mov.tipoMovimiento === 'Ingreso', 'egreso': mov.tipoMovimiento.includes('EG')}"
         >
           <td class="d-none" *ngIf="(mov.tipoMovimiento == 'Ingreso')"> {{mov.id}} </td>
-          <td class="text-center"> {{mov.fecha | date: 'dd/MM/yyyy'}} </td>
+          <td class="text-center"> {{mov.fecha.toDate() | date: 'dd/MM/yyyy'}} </td>
           <td class="text-center"> {{mov.tipoMovimiento}} </td>
           <td class="text-left"> {{mov.nombreProducto}} </td>
           <td class="text-left"> {{mov.nombreProveedor}} </td>

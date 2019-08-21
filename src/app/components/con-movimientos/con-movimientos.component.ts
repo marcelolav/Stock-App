@@ -16,9 +16,6 @@ export class ConMovimientosComponent implements OnInit, OnDestroy {
     .pipe(takeUntil(this.unsubscribe))
     .subscribe(res => { this.movimientos = res; });
   }
-  pruebaFuncion(dato) {
-    console.log(dato);
-  }
   ngOnInit() {
   }
   ngOnDestroy() {
