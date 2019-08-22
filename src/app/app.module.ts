@@ -39,6 +39,7 @@ import { ConIngresosComponent } from './components/con-ingresos/con-ingresos.com
 import { ConEgresosVentaComponent } from './components/con-egresos-venta/con-egresos-venta.component';
 import { ConEgresosStockComponent } from './components/con-egresos-stock/con-egresos-stock.component';
 import { ConMovimientosComponent } from './components/con-movimientos/con-movimientos.component';
+import { ConListaPreciosComponent } from './components/con-lista-precios/con-lista-precios.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,7 +57,8 @@ import { ConMovimientosComponent } from './components/con-movimientos/con-movimi
     ConIngresosComponent,
     ConEgresosVentaComponent,
     ConEgresosStockComponent,
-    ConMovimientosComponent
+    ConMovimientosComponent,
+    ConListaPreciosComponent
   ],
   imports: [
     BrowserModule,

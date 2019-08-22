@@ -6,7 +6,6 @@
       <thead class="text-center">
         <th class="d-none">ID</th>
         <th>Fecha</th>
-        <th>Tipo Movimiento</th>
         <th>Producto</th>
         <th>Cliente</th>
         <th>Salida</th>
@@ -16,7 +15,6 @@
         <tr *ngFor="let mov of movimientos">
           <td class="d-none" *ngIf="(mov.tipoMovimiento == 'EG-Stock')"> {{mov.id}} </td>
           <td class="text-center" *ngIf="(mov.tipoMovimiento == 'EG-Stock')"> {{mov.fecha.toDate() | date: 'dd/MM/yyyy'}} </td>
-          <td class="text-center" *ngIf="(mov.tipoMovimiento == 'EG-Stock')"> {{mov.tipoMovimiento}} </td>
           <td class="text-left" *ngIf="(mov.tipoMovimiento == 'EG-Stock')"> {{mov.nombreProducto}} </td>
           <td class="text-left" *ngIf="(mov.tipoMovimiento == 'EG-Stock')"> {{mov.nombreCliente}} </td>          
           <td class="text-right" *ngIf="(mov.tipoMovimiento == 'EG-Stock')"> {{mov.cantidadEgreso | number: '0.2-2'}} </td>

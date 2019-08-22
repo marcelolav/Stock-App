@@ -6,27 +6,19 @@
       <thead class="text-center">
         <th class="d-none">ID</th>
         <th>Fecha</th>
-        <th>Tipo Movimiento</th>
         <th>Producto</th>
         <th>Proveedor</th>
-        <th>Cliente</th>
-        <th>Entrada</th>
-        <th>Salida</th>
+        <th>Unidades</th>
         <th>Precio Compra</th>
-        <th>Precio Venta</th>
       </thead>
       <tbody >
         <tr *ngFor="let mov of movimientos">
           <td class="d-none" *ngIf="(mov.tipoMovimiento == 'Ingreso')"> {{mov.id}} </td>
           <td class="text-center" *ngIf="(mov.tipoMovimiento == 'Ingreso')"> {{mov.fecha.toDate() | date: 'dd/MM/yyyy'}} </td>
-          <td class="text-center" *ngIf="(mov.tipoMovimiento == 'Ingreso')"> {{mov.tipoMovimiento}} </td>
           <td class="text-left" *ngIf="(mov.tipoMovimiento == 'Ingreso')"> {{mov.nombreProducto}} </td>
           <td class="text-left" *ngIf="(mov.tipoMovimiento == 'Ingreso')"> {{mov.nombreProveedor}} </td>
-          <td class="text-left" *ngIf="(mov.tipoMovimiento == 'Ingreso')"> {{mov.nombreCliente}} </td>          
           <td class="text-right" *ngIf="(mov.tipoMovimiento == 'Ingreso')"> {{mov.cantidadIngreso | number: '0.2-2'}} </td>
-          <td class="text-right" *ngIf="(mov.tipoMovimiento == 'Ingreso')"> {{mov.cantidadEgreso | number: '0.2-2'}} </td>
-          <td class="text-right" *ngIf="(mov.tipoMovimiento == 'Ingreso')"> {{mov.precioCompra | currency:'$AR '}} </td>
-          <td class="text-right" *ngIf="(mov.tipoMovimiento == 'Ingreso')"> {{mov.precioVenta | currency:'$AR '}} </td>
+          <td class="text-right" *ngIf="(mov.tipoMovimiento == 'Ingreso')"> {{mov.precioCompra | currency:'$ '}} </td>
         </tr>
       </tbody>
     </table>

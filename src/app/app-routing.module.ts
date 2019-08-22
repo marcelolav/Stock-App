@@ -15,6 +15,7 @@ import { ConMovimientosComponent } from './components/con-movimientos/con-movimi
 import { ConIngresosComponent } from './components/con-ingresos/con-ingresos.component';
 import { ConEgresosVentaComponent } from './components/con-egresos-venta/con-egresos-venta.component';
 import { ConEgresosStockComponent } from './components/con-egresos-stock/con-egresos-stock.component';
+import { ConListaPreciosComponent } from './components/con-lista-precios/con-lista-precios.component';
 
 
 const routes: Routes = [
@@ -31,6 +32,7 @@ const routes: Routes = [
   { path: 'conIngresos', component: ConIngresosComponent },
   { path: 'conEgresosVenta', component: ConEgresosVentaComponent },
   { path: 'conEgresosStock', component: ConEgresosStockComponent},
+  { path: 'conListaPrecios', component: ConListaPreciosComponent},
   { path: '**', component: Page404Component },
 ];
 

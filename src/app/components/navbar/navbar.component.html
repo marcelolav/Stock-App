@@ -25,16 +25,16 @@
       </button>
       <ul id="productos" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
         <li role="menuitem"><a class="dropdown-item" routerLink='abmproveedores'>
-            <fa name="plus"></fa> ABM Proveedores
+            <fa name="cube"></fa> ABM Proveedores
           </a></li>
         <li role="menuitem"><a class="dropdown-item" routerLink='abmclientes'>
-            <fa name="plus"></fa> ABM Clientes
+            <fa name="cube"></fa> ABM Clientes
           </a></li>
         <li role="menuitem"><a class="dropdown-item" routerLink='abmproductos'>
-            <fa name="plus"></fa> ABM Productos
+            <fa name="cube"></fa> ABM Productos
           </a></li>
         <li role="menuitem"><a class="dropdown-item" routerLink='abmrubros'>
-            <fa name="plus"></fa> ABM Rubros
+            <fa name="cube"></fa> ABM Rubros
           </a></li>
       </ul>
     </div> <!-- Fin div menu configuracion -->
@@ -48,21 +48,22 @@
       <ul id="productos" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
         <li role="menuitem">
           <a class="dropdown-item" routerLink='ingreso'>
-            <fa name="plus"></fa> Ingreso a Deposito
+            <fa name="cube"></fa> Ingreso a Deposito
           </a>
         </li>
         <li role="menuitem">
           <a class="dropdown-item" routerLink='egresoStock'>
-            <fa name="plus"></fa> Salida por Stock
+            <fa name="cube"></fa> Salida por Stock
           </a>
         </li>
         <li role="menuitem">
           <a class="dropdown-item" routerLink='egresoVentas'>
-            <fa name="plus"></fa> Salida por Facturación
+            <fa name="cube"></fa> Salida por Facturación
           </a>
         </li>
       </ul>
     </div> <!-- Fin div menu Movimientos -->
+    <!-- Consultas en pantalla -->
     <div class="btn-group ml-2" dropdown>
       <button id="button-basic" dropdownToggle type="button" class="btn dropdown-toggle botlog mr-4"
         aria-controls="productos">
@@ -72,37 +73,42 @@
       <ul id="productos" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
         <li role="menuitem">
           <a class="dropdown-item" routerLink='conMovimientos'>
-            <fa name="plus"></fa> Movimientos
+            <fa name="cube"></fa> Movimientos
           </a>
         </li>
         <li role="menuitem">
           <a class="dropdown-item" routerLink='conIngresos'>
-            <fa name="plus"></fa> Ingresos
+            <fa name="cube"></fa> Ingresos
           </a>
         </li>
         <li role="menuitem">
           <a class="dropdown-item" routerLink='conEgresosVenta'>
-            <fa name="plus"></fa> Salidas por Ventas
+            <fa name="cube"></fa> Salidas por Ventas
           </a>
         </li>
         <li role="menuitem">
           <a class="dropdown-item" routerLink='conEgresosStock'>
-            <fa name="plus"></fa> Salidas por Stock
+            <fa name="cube"></fa> Salidas por Stock
+          </a>
+        </li>
+        <li role="menuitem">
+          <a class="dropdown-item" routerLink='conListaPrecios'>
+            <fa name="cube"></fa> Lista de Precios
           </a>
         </li>
       </ul>
-    </div> <!-- Fin div menu Movimientos -->
+    </div> <!-- Fin div menu consulta en pnt -->
   </div>
   <div class="btn-group ml-5" dropdown>
       <iframe width="140px" height="85px" src="https://www.dolarsi.com/cotizador/cotizadorDolarsiSmall.php" frameborder="0" scrolling="0" allowfullscreen=""></iframe>
     <button id="button-basic" dropdownToggle type="button" class="btn dropdown-toggle botlog mr-4" aria-controls="test">
-      <fa name="cog" animation="spin"></fa>
+      <fa name="cube" animation="spin"></fa>
       Test Component
     </button>
     <ul id="test" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
       <li role="menuitem">
         <a class="dropdown-item" routerLink='probarModulo'>
-          <fa name="plus"></fa> Pruebas
+          <fa name="cube"></fa> Pruebas
         </a>
       </li>
     </ul>
