@@ -10,6 +10,8 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 // Modales
 import { BsModalService, BsModalRef } from 'ngx-bootstrap';
+import { Encabezado } from 'src/app/interfaces/encabezado';
+import { Detalle } from 'src/app/interfaces/detalle';
 
 @Component({
   selector: 'ang-ingresos',
@@ -18,8 +20,8 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap';
 })
 export class IngresosComponent implements OnInit, OnDestroy {
 
-  encabezado = {};
-  detalle = {};
+  encabezado = {} as Encabezado;
+  detalle = {} as Detalle;
   itemsDetalle = [];
   items = false;
   regIngreso = {} as Movimientos;
@@ -63,7 +65,7 @@ export class IngresosComponent implements OnInit, OnDestroy {
       this.totalCantidad = this.totalCantidad + data.cantidadIngreso;
       this.totalCompra = this.totalCompra + data.precioCompra;
 
-      this.detalle = {};
+      this.detalle = {} as Detalle;
       this.encabezado = {
         fecha: data.fecha,
         nombreProveedor: data.nombreProveedor,
@@ -120,6 +122,10 @@ export class IngresosComponent implements OnInit, OnDestroy {
         cantidadActualizar
       );
     });
+    this.encabezado = {} as Encabezado;
+    this.detalle = {} as Detalle;
+    this.itemsDetalle = [];
+    this.modalRef.hide()
   }
   ngOnDestroy() {
     this.unsubscribe.next();

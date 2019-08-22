@@ -21,7 +21,7 @@
     </div>
   </div>
   <div class="row" *ngIf="items">
-    <table class="table">
+    <table class="table table-bordered">
       <thead>
         <th>#Item</th>
         <th>Producto</th>
@@ -154,7 +154,7 @@
   </div>
   <div class="modal-footer">
     <button class="btn btn-primary" (click)="confirmaDefinitiva(encabezado, itemsDetalle, totalCantidad, totalCompra)">Confirmar</button>
-    <button class="btn btn-danger">Cancelar</button>
+    <button class="btn btn-danger" (click)="modalRef.hide()">Cancelar</button>
   </div>
 
 </ng-template>
