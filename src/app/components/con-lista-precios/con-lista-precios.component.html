@@ -1,1 +1,27 @@
-<p>con-lista-precios works!</p>
+<h3>Lista de Precios</h3>
+<div class="row mb-5">
+    <div class="col">
+        <input class="form-control" type="text" [(ngModel)]="productoFiltro.nombreProducto" placeholder="Nombre del Producto">
+    </div>
+    <div class="col">
+        <input class="form-control" type="text" [(ngModel)]="productoFiltro.nombreRubro" placeholder="Nombre del Rubro">
+    </div>
+</div>
+
+<table class="table table-bordered">
+    <thead>
+        <th>Descripcion</th>
+        <th>Rubro</th>
+        <th>Stock</th>
+        <th>Precio Venta</th>
+    </thead>
+    <tbody>
+        <tr *ngFor="let pr of productos | filterBy: productoFiltro" [ngClass]="{'precioOferta': pr.esOferta, 'stockBajo': pr.existencia < 5}">
+            <td>{{pr.nombreProducto}}</td>
+            <td>{{pr.nombreRubro}}</td>
+            <td>{{pr.existencia}}</td>
+            <td>{{pr.precioVenta}}</td>
+        </tr>
+    </tbody>
+</table>
+

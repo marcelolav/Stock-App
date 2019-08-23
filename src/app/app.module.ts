@@ -20,6 +20,8 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+// ngx-filter-pipe
+import { FilterPipeModule } from 'ngx-filter-pipe';
 // Font Awesome para angular
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 // Componentes
@@ -75,7 +77,8 @@ import { ConListaPreciosComponent } from './components/con-lista-precios/con-lis
     CollapseModule.forRoot(),
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    FilterPipeModule
   ],
   providers: [AngularFireAuth, AngularFirestore],
   bootstrap: [AppComponent]
