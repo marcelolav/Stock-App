@@ -29,7 +29,7 @@ export class AbmClientesComponent implements OnInit, OnDestroy {
 
   agregarCliente(cliente: Cliente) {
     this.regCliente = {
-      nombre: cliente.nombre,
+      nombreCliente: cliente.nombreCliente,
       direccion: cliente.direccion,
       telefono: cliente.telefono,
       cuit: cliente.cuit
@@ -52,7 +52,7 @@ export class AbmClientesComponent implements OnInit, OnDestroy {
   openModal(template: TemplateRef<any>, data: any) {
     this.regCliente = {
       id: data.id,
-      nombre: data.nombre,
+      nombreCliente: data.nombreCliente,
       direccion: data.direccion,
       telefono: data.telefono,
       cuit: data.cuit

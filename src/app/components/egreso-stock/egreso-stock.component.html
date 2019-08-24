@@ -1,1 +1,101 @@
-<p>egreso-stock works!</p>
+<h3>Salida de Mercadería por Ajuste de Stock - Devolucion - Descarte</h3>
+
+<div class="row">
+  <!-- Fecha y proveedor para ingresos -->
+  <div class="row">
+    <div class="form-group mr-3">
+      <label for="fecha">Fecha:</label>
+      <input type="text" placeholder="Fecha" class="form-control" bsDatepicker name="fecha"
+        [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" [(ngModel)]="encabezado.fecha">
+    </div>
+    <div class="form-group mr-3">
+      <label for="proveedor">Proveedor:</label>
+      <select name="proveedor" id="proveedor" class="form-control" name="nombreProveedor"
+        [(ngModel)]="encabezado.nombreProveedor">
+        <option *ngFor="let prov of proveedores" value="{{prov.nombre}}"> {{prov.nombre}} </option>
+      </select>
+    </div>
+    <div class="form-group mr-3">
+      <label for="cliente">Cliente:</label>
+      <select name="cliente" id="cliente" class="form-control" name="nombreCliente"
+        [(ngModel)]="encabezado.nombreCliente">
+        <option *ngFor="let cli of clientes" value="{{cli.nombreCliente}}"> {{cli.nombreCliente}} </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="comprobante">Nº Comprobante/Referencia</label>
+      <input type="text" name="comprobante" id="comprobante" [(ngModel)]="encabezado.comprobante" class="form-control">
+    </div>
+  </div>
+  <div class="row" *ngIf="items">
+    <table class="table table-bordered">
+      <thead>
+        <th>#Item</th>
+        <th>Producto</th>
+        <th>Cantidad</th>
+        <th>Precio Unitario</th>
+        <th>Precio Compra</th>
+        <th>Precio Venta</th>
+        <th>Acciones</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of itemsDetalle; let i = index">
+          <td> {{i}}</td>
+          <td> {{item.nombreProducto2}} </td>
+          <td> {{item.cantidadIngreso | number:'0.2-2'}} </td>
+          <td> {{item.precioUnitario | number:'0.2-2'}} </td>
+          <td> {{item.precioCompra | number:'0.2-2'}} </td>
+          <td> {{item.precioVenta | number:'0.2-2'}} </td>
+          <td>
+            <button (click)="borraElementoDetalle(i, item.cantidadIngreso, item.precioCompra)">
+              <fa name="times"></fa>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+      <hr>
+      <p>Total Productos: {{totalCantidad}} Total Compra: {{totalCompra}} </p>
+    </table>
+  </div>
+</div>
+<button *ngIf="items" (click)="openModal(confirmaIngresoTotal, movimientos)" class="btn btn-primary">Confirmar
+  Ingreso</button>
+<button (click)="openModal(itemSalida, encabezado)" class="btn btn-primary">Agregar Item</button>
+
+<ng-template #itemSalida>
+  <div class="modal-header">
+    <h3>Ingreso a stock</h3>
+  </div>
+  <div class="modal-body">
+    <input type="hidden" [(ngModel)]="encabezado.fecha" name="fecha">
+    <input type="hidden" [(ngModel)]="encabezado.nombreProveedor" name="nombreProveedor">
+    <input type="hidden" [(ngModel)]="encabezado.nombreCliente" name="nombreCliente">
+    <input type="hidden" [(ngModel)]="encabezado.comprobante" name="comprobante">
+    <div class="row align-items-center">
+      <div class="form-group mr-1 col">
+        <label for="producto">Producto:</label>
+        <select name="producto" id="producto" class="form-control" name="nombreProducto"
+          [(ngModel)]="detalle.infoProducto">
+          <option *ngFor="let prod of productos" value="{{prod.id}}, {{prod.nombreProducto}}, {{prod.existencia}}">
+            {{prod.nombreProducto}} {{prod.existencia}}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group mr-1 col">
+        <label for="cantidad">Cantidad</label>
+        <input type="number" id="cantidad" class="form-control" name="cantidadEgreso"
+          [(ngModel)]="detalle.cantidadEgreso">
+      </div>
+    </div>
+    
+  </div>
+  <div class="modal-footer">
+    <button (click)="agregarItem(encabezado, detalle)" class="btn btn-success">
+      <fa name="check"></fa> Agregar Item
+    </button>
+    <button (click)="modalRef.hide()" class="btn btn-danger">
+      <fa name="times"></fa> Cancelar
+    </button>
+  </div>
+</ng-template>

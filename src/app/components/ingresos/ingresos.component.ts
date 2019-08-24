@@ -1,7 +1,9 @@
 import { Component, OnInit, TemplateRef, OnDestroy  } from '@angular/core';
-// Interfaz de movimientos (Diseño del registro movimientos)
+// Interfaces a usar
 import { Movimientos } from 'src/app/interfaces/movimientos';
-// Servicios a utilizar
+import { Encabezado } from 'src/app/interfaces/encabezado';
+import { Detalle } from 'src/app/interfaces/detalle';
+// Servicios a usar
 import { MovimientosService } from 'src/app/services/movimientos.service';
 import { ProductosService } from 'src/app/services/productos.service';
 import { ProveedoresService } from 'src/app/services/proveedores.service';
@@ -10,8 +12,6 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 // Modales
 import { BsModalService, BsModalRef } from 'ngx-bootstrap';
-import { Encabezado } from 'src/app/interfaces/encabezado';
-import { Detalle } from 'src/app/interfaces/detalle';
 
 @Component({
   selector: 'ang-ingresos',
@@ -56,11 +56,11 @@ export class IngresosComponent implements OnInit, OnDestroy {
     if (Object.keys(data).length < 4 ) {
       console.log('objeto vacio! o no estan todos los campos');
     } else {
+      this.items = true;   // Hay un item agregado a la lista
       data.idProducto2 = data.idProducto.split(',')[0];
       data.nombreProducto2 = data.idProducto.split(',')[1].trim();
       data.existenciaProducto = +data.idProducto.split(',')[2];
       this.movimientos = Object.assign(data, prov);
-      this.items = true;
       this.itemsDetalle.push(this.movimientos);
       this.totalCantidad = this.totalCantidad + data.cantidadIngreso;
       this.totalCompra = this.totalCompra + data.precioCompra;

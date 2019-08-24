@@ -17,7 +17,7 @@
     <tbody>
       <tr *ngFor="let cl of clientes">
         <td class="d-none"> {{cl.id}} </td>
-        <td> {{cl.nombre}} </td>
+        <td> {{cl.nombreCliente}} </td>
         <td> {{cl.direccion}} </td>
         <td> {{cl.telefono}} </td>
         <td> {{cl.cuit}} </td>
@@ -45,7 +45,7 @@
         <input type="hidden" id="id" name="id" value="" [(ngModel)]="regCliente.id">
         <div class="col-md-6">
           <label for="nombre">Nombre:</label>
-          <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="regCliente.nombre">
+          <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="regCliente.nombreCliente">
         </div>
         <div class="col-md-6">
           <label for="direccion">Direccion:</label>
@@ -84,7 +84,7 @@
         <input type="hidden" id="id" name="id" value="" [(ngModel)]="regCliente.id">
         <div class="col-md-6">
           <label for="nombre">Nombre:</label>
-          <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="regCliente.nombre">
+          <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="regCliente.nombreCliente">
         </div>
         <div class="col-md-6">
           <label for="direccion">Direccion:</label>
@@ -123,7 +123,7 @@
       <h5>PRECAUCION: Esta acción no puede revertirse</h5>
     </strong>
     Está a punto de eliminar el registro de Cliente: <br>
-    <strong> {{regCliente.nombre}} </strong> <br>
+    <strong> {{regCliente.nombreCliente}} </strong> <br>
     <strong> {{regCliente.direccion}} </strong> <br>
     <strong> {{regCliente.telefono}} </strong> <br> 
     <strong> {{regCliente.cuit}} </strong> <br>
