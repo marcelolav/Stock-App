@@ -1,6 +1,16 @@
-# Detalles para la instalacion:
+# Stock-Angular
 
-1) Crear carpeta dentro de src/environments y dentro de ella crear los archivos para configuracion del proyecto:
+Sistema de control de inventario Front-End basado en Angular con Base de datos Firestore.
+
+Referencias:
+```
+Los archivos de environment sirven para identificar la base de datos a utilizar y no se encuentran en este repositorio debido a que cada implementación hace uso de datos personales de cada conexión.  Si no sabe como utilizar firestore, lea la documentación. Los detalles se encuentran abajo.
+```
+
+
+## Detalles para la instalacion:
+
+1) Crear una carpeta dentro de src/environments y dentro de ella crear los archivos siguientes ya que son necesarios para configuracion del proyecto:
 
 environment.prod.ts  
 environment.ts
@@ -21,7 +31,10 @@ export const environment = {
     }
 };
 ```
-Los xxxx son los datos de su propio firestore o firebase.
+Los xxxx son los datos de su propio firestore o firebase.  Si no sabe donde obtenerlos dirijase a la [documentación de Firebase](https://firebase.google.com/)
+
+Si desea saber mas acerca de Angular dirijasé a la [documentación de Angular](https://angular.io/docs)
+
 
 3) Instale las dependencias:
 
@@ -44,4 +57,6 @@ Para consultas, reporte de errores o bien si desea unirse al proyecto puede:
 
 [Comunicarse con desarrollo](mailto:marcelo.lavandeira@gmail.com)	
 
-10/08/2019 Buenos Aires, República Argentina
+&copy; 2019 SystemsWest Argentina
+
+Buenos Aires, República Argentina
