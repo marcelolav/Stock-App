@@ -1,4 +1,5 @@
 export interface Detalle {
+    idProducto?: string;
     infoProducto?: string;
     nombreProducto: string;
     cantidadIngreso?: number;

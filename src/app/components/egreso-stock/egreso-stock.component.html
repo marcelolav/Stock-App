@@ -8,63 +8,53 @@
       <input type="text" placeholder="Fecha" class="form-control" bsDatepicker name="fecha"
         [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" [(ngModel)]="encabezado.fecha">
     </div>
-    <div class="form-group mr-3">
-      <label for="proveedor">Proveedor:</label>
-      <select name="proveedor" id="proveedor" class="form-control" name="nombreProveedor"
-        [(ngModel)]="encabezado.nombreProveedor">
-        <option *ngFor="let prov of proveedores" value="{{prov.nombre}}"> {{prov.nombre}} </option>
-      </select>
-    </div>
-    <div class="form-group mr-3">
-      <label for="cliente">Cliente:</label>
-      <select name="cliente" id="cliente" class="form-control" name="nombreCliente"
-        [(ngModel)]="encabezado.nombreCliente">
-        <option *ngFor="let cli of clientes" value="{{cli.nombreCliente}}"> {{cli.nombreCliente}} </option>
-      </select>
-    </div>
     <div class="form-group">
       <label for="comprobante">Nº Comprobante/Referencia</label>
       <input type="text" name="comprobante" id="comprobante" [(ngModel)]="encabezado.comprobante" class="form-control">
     </div>
   </div>
-  <div class="row" *ngIf="items">
-    <table class="table table-bordered">
-      <thead>
-        <th>#Item</th>
+
+</div>
+<div class="row" *ngIf="items">
+  <table class="table table-bordered">
+    <thead class="bg-success">
+      <tr class="text-center">
+        <th style="width: 50px;">#Item</th>
         <th>Producto</th>
         <th>Cantidad</th>
-        <th>Precio Unitario</th>
-        <th>Precio Compra</th>
-        <th>Precio Venta</th>
-        <th>Acciones</th>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of itemsDetalle; let i = index">
-          <td> {{i}}</td>
-          <td> {{item.nombreProducto2}} </td>
-          <td> {{item.cantidadIngreso | number:'0.2-2'}} </td>
-          <td> {{item.precioUnitario | number:'0.2-2'}} </td>
-          <td> {{item.precioCompra | number:'0.2-2'}} </td>
-          <td> {{item.precioVenta | number:'0.2-2'}} </td>
-          <td>
-            <button (click)="borraElementoDetalle(i, item.cantidadIngreso, item.precioCompra)">
-              <fa name="times"></fa>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-      <hr>
-      <p>Total Productos: {{totalCantidad}} Total Compra: {{totalCompra}} </p>
-    </table>
+        <th style="width: 50px;"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of detalleArray ; let i = index" class="bg-light text-dark">
+        <td> {{i}} </td>
+        <td> {{item.nombreProducto}} </td>
+        <td class="text-right"> {{item.cantidadEgreso | number:'0.2-2'}} </td>
+        <td>
+          <button (click)="borraElementoDetalle(i, item.cantidadEgreso)">
+            <fa name="times"></fa>
+          </button>
+        </td>
+      </tr>
+      <tr class="bg-primary text-white">
+        <td></td>
+        <td class="text-right">Total Productos:</td>
+        <td class="text-right">{{totalCantidad | number:'0.2-2'}}</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <div class="col d-flex justify-content-center">
+    <button *ngIf="items" (click)="openModal(confirmaSalidaTotal, encabezado, detalleArray)" class="btn btn-primary mr-4">Confirmar</button>
+    <button (click)="openModal(itemSalida, encabezado, [])" class="btn btn-primary">Agregar Item</button>
   </div>
 </div>
-<button *ngIf="items" (click)="openModal(confirmaIngresoTotal, movimientos)" class="btn btn-primary">Confirmar
-  Ingreso</button>
-<button (click)="openModal(itemSalida, encabezado)" class="btn btn-primary">Agregar Item</button>
 
 <ng-template #itemSalida>
   <div class="modal-header">
-    <h3>Ingreso a stock</h3>
+    <h3>Salida de stock</h3>
   </div>
   <div class="modal-body">
     <input type="hidden" [(ngModel)]="encabezado.fecha" name="fecha">
@@ -88,7 +78,7 @@
           [(ngModel)]="detalle.cantidadEgreso">
       </div>
     </div>
-    
+
   </div>
   <div class="modal-footer">
     <button (click)="agregarItem(encabezado, detalle)" class="btn btn-success">
@@ -98,4 +88,56 @@
       <fa name="times"></fa> Cancelar
     </button>
   </div>
+</ng-template>
+
+<ng-template #confirmaSalidaTotal>
+  <div class="modal-header">
+    <h3>Confirme Salida de Productos</h3>
+  </div>
+  <div class="modal-body">
+    <table class="table table-bordered text-center">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Comprobante</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{encabezado.fecha | date: 'dd/MM/yyyy'}}</td>
+          <td>{{encabezado.comprobante}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="table table-bordered">
+      <thead>
+        <tr class="text-center">
+          <th># Item</th>
+          <th>Producto</th>
+          <th>Cantidad</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of detalleArray; let i = index">
+          <td>{{i}}</td>
+          <td>{{item.nombreProducto}}</td>
+          <td class="text-right">{{item.cantidadEgreso | number:'0.2-2'}}</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td class="text-right">Cantidad Total:</td>
+          <td class="text-right"> {{totalCantidad | number:'0.2-2'}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="modal-footer">
+    <button (click)="confirmaSalidaDefinitiva(encabezado, detalleArray)" class="btn btn-danger">Confirmar</button>
+    <button (click)="modalRef.hide()" class="btn btn-primary">Cancelar</button>
+  </div>
+  <!-- <ul>
+    <li *ngFor="let i of detalleArray">
+      {{i.nombreProducto}}  ////  Cantidad: {{i.cantidadEgreso}}
+    </li>
+  </ul> -->
 </ng-template>

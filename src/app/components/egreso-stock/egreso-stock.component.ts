@@ -24,7 +24,12 @@ export class EgresoStockComponent implements OnInit, OnDestroy {
   private unsubscribe = new Subject();
   encabezado = {} as Encabezado;
   detalle = {} as Detalle;
+  detalleItem = {} as Detalle;
   regSalida = {} as Movimientos;
+
+  detalleArray = [];
+
+  totalCantidad = 0;
 
   productos = [];
   proveedores = [];
@@ -58,38 +63,69 @@ export class EgresoStockComponent implements OnInit, OnDestroy {
       .subscribe(res => { this.clientes = res; });
   }
   // Abre el modal con los datos
-  openModal(template: TemplateRef<any>, data: any) {
+  openModal(template: TemplateRef<any>, encabezado: any, detalle: any) {
     this.encabezado = {
-      fecha: data.fecha,
-      nombreProveedor: data.nombreProveedor,
-      nombreCliente: data.nombreCliente,
-      comprobante: data.comprobante
+      fecha: encabezado.fecha,
+      comprobante: encabezado.comprobante
     };
+    this.detalle = {
+      nombreProducto: detalle.nombreProducto,
+      precioUnitario: 0,
+      precioCompra: 0,
+      precioVenta: 0,
+      cantidadEgreso: detalle.cantidadEgreso
+    }
     this.modalRef = this.modalService.show(template);
     this.modalRef.setClass('modal-lg');
   }
 
   agregarItem(encabezado, detalle) {
     console.log(encabezado);
-    if (Object.keys(encabezado).length < 4) {
+    if (encabezado.comprobante === null || encabezado.comprobante === undefined) {
       console.log('Debe completar encabezado de movimiento!');
     } else { 
       if (Object.keys(detalle).length < 2) {
         console.log('debe completar el ingreso de detalle!');
       } else {
-        console.log('Completo todos los datos correctamente!!!');
-        console.log('Id Producto:', detalle.infoProducto.split(',')[0]);
-        console.log('Nombre:', detalle.infoProducto.split(',')[1]);
-        console.log('Existencia:', +detalle.infoProducto.split(',')[2]);
-        console.log('Salida:', detalle.cantidadEgreso);
         const cantidadNueva = +detalle.infoProducto.split(',')[2] - detalle.cantidadEgreso;
         if (cantidadNueva < 0) {
           console.log('No se puede sacar No hay stock suficiente!');
         } else {
+          this.totalCantidad = this.totalCantidad + detalle.cantidadEgreso;
+          console.log(this.totalCantidad);
           console.log('Cantidad Nueva: ', cantidadNueva);
+          this.detalleItem = {
+            idProducto: detalle.infoProducto.split(',')[0],
+            nombreProducto: detalle.infoProducto.split(',')[1],
+            cantidadEgreso: detalle.cantidadEgreso,
+            precioUnitario: 0,
+            precioCompra: 0,
+            precioVenta: 0
+          };
+          this.detalleArray.push(this.detalleItem);
+          if (this.detalleArray.length > 0) {
+            this.items = true;
+          } else {
+            this.items = false;
+          }
+          console.log(this.detalleArray);
         }
       }
     }
+  }
+  borraElementoDetalle(item, cantidad) {
+    console.log(item, cantidad);
+    this.totalCantidad = this.totalCantidad - cantidad;
+    this.detalleArray.splice(item, 1);
+    if (this.detalleArray.length > 0) {
+      this.items = true;
+    } else {
+      this.items = false;
+    }
+  }
+  confirmaSalidaDefinitiva(enca, items) {
+    console.log('Encabezado: ', enca);
+    console.log('Detalle: ', items);
   }
   ngOnDestroy() {
     this.unsubscribe.next();
