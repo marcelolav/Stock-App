@@ -124,8 +124,27 @@ export class EgresoStockComponent implements OnInit, OnDestroy {
     }
   }
   confirmaSalidaDefinitiva(enca, items) {
-    console.log('Encabezado: ', enca);
-    console.log('Detalle: ', items);
+    console.log(items);
+    items.forEach(item => {
+      this.regSalida = {
+        fecha: enca.fecha,
+        comprobante: enca.comprobante,
+        tipoMovimiento: 'EG-Stock',
+        idProducto: item.idProducto,
+        nombreProducto: item.nombreProducto,
+        nombreProveedor: ' ',
+        nombreCliente: ' ',
+        cantidadEgreso: item.cantidadEgreso,
+        cantidadIngreso: 0,
+        precioUnitario: 0,
+        precioCompra: 0,
+        precioVenta: 0
+      };
+      console.log(this.regSalida);
+      console.log(item);
+      // this.movServ.addMovimiento(this.regSalida);  // Agrego movimiento a la base de entradas y salidas
+      // const cantidadActualizar = item.existenciaProducto - item.cantidadIngreso;
+    });
   }
   ngOnDestroy() {
     this.unsubscribe.next();
