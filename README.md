@@ -49,6 +49,49 @@ o bien
 
 Esto creará un servidor en la dirección localhost,  verifique los mensajes en pantalla para saber en que dirección y puerto se alojó la aplicacion.  
 
+## Actualizaciones
+
+### 31-08-2019 (Creacion de contenedor e imagenes con docker)
+
+Una vez realizada la descarga primero debe realizar el build de la aplicacion con
+```
+npm run build
+```
+Esto genera una carpeta con el contenido para desplegar en cualquier servidor en linea (Ya transpilado a java nativo).  Si tiene instalado el sistema de virtualización de docker,  desde la misma linea de comandos tipee:
+```
+npm run dockerbuild
+```
+
+Esto creará y generará los archivos de imagen y contenedor necesarios para el despliegue de la app en un contenedor. 
+
+Revise la documentación de Docker para mas detalle sobre todos los comandos disponibles,  y obviamente si no tiene instalado docker el comando anteriormente mencionado no funcionará.
+
+[Documentación de Docker]('https://docs.docker.com/)
+
+[Página principal de Docker]('https://www.docker.com)
+
+Nota: Los comandos necesarios para el despliegue se encuentran en 2 archivos, el archivo Dockerfile y el archivo docker-compose.yml
+
+Estos archivos son los responsables de la creación de los contenedores e imagenes.  Fueron realizados desde un sistema operativo Windows 10, por lo que si desea desplegar la app desde otro sistema operativo verificar las siguientes lineas:
+```
+Dockerfile
+
+FROM nginx:latest
+COPY //dist//stock-angular//. /usr/share/nginx/html 
+     ------------------------
+
+docker-compose.yml
+version: "3.7"
+services:
+  webapp:
+    ports:
+      - '8080:80'
+    build:
+      context: .
+      dockerfile: Dockerfile
+```
+Verificar:  La existencia de la carpeta /dist  esta carpeta se crea cuando ejecutamos 'npm run build', luego por ejemplo en linux las carpetas no llevan la doble barra por lo que deberá reemplazar // por una unica barra '/', en otros sistemas operativos puede cambiar notablemente por lo que deberá recurrir a la documentación de docker y de su sistema operativo.
+
 ### Importante:
 
 Cuando se abre un servidor de desarrollo en la máquina local puede que de algun tipo de advertencia desde el firewall, verifique el mensaje y decida en consecuencia.  Siempre necesitará un puerto disponible para la escucha de la app. 
