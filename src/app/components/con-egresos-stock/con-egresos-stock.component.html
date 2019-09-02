@@ -9,7 +9,6 @@
         <th>Producto</th>
         <th>Cliente</th>
         <th>Salida</th>
-        <th>Precio Venta</th>
       </thead>
       <tbody >
         <tr *ngFor="let mov of movimientos">
@@ -18,7 +17,6 @@
           <td class="text-left" *ngIf="(mov.tipoMovimiento == 'EG-Stock')"> {{mov.nombreProducto}} </td>
           <td class="text-left" *ngIf="(mov.tipoMovimiento == 'EG-Stock')"> {{mov.nombreCliente}} </td>          
           <td class="text-right" *ngIf="(mov.tipoMovimiento == 'EG-Stock')"> {{mov.cantidadEgreso | number: '0.2-2'}} </td>
-          <td class="text-right" *ngIf="(mov.tipoMovimiento == 'EG-Stock')"> {{mov.precioVenta | currency:'$AR '}} </td>
         </tr>
       </tbody>
     </table>

@@ -11,6 +11,7 @@ import { Subject } from 'rxjs';
 export class ConMovimientosComponent implements OnInit, OnDestroy {
   private unsubscribe = new Subject();
   movimientos = [];
+  movimientosFiltro: any = { nombreProducto: '' };
   constructor( private movSer: MovimientosService) { 
     this.movSer.getMovimientos()
     .pipe(takeUntil(this.unsubscribe))

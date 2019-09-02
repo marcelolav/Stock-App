@@ -80,7 +80,6 @@ export class EgresoStockComponent implements OnInit, OnDestroy {
   }
 
   agregarItem(encabezado, detalle) {
-    console.log(encabezado);
     if (encabezado.comprobante === null || encabezado.comprobante === undefined) {
       console.log('Debe completar encabezado de movimiento!');
     } else { 
@@ -92,11 +91,10 @@ export class EgresoStockComponent implements OnInit, OnDestroy {
           console.log('No se puede sacar No hay stock suficiente!');
         } else {
           this.totalCantidad = this.totalCantidad + detalle.cantidadEgreso;
-          console.log(this.totalCantidad);
-          console.log('Cantidad Nueva: ', cantidadNueva);
           this.detalleItem = {
             idProducto: detalle.infoProducto.split(',')[0],
             nombreProducto: detalle.infoProducto.split(',')[1],
+            existenciaProducto: +detalle.infoProducto.split(',')[2],
             cantidadEgreso: detalle.cantidadEgreso,
             precioUnitario: 0,
             precioCompra: 0,
@@ -108,13 +106,11 @@ export class EgresoStockComponent implements OnInit, OnDestroy {
           } else {
             this.items = false;
           }
-          console.log(this.detalleArray);
         }
       }
     }
   }
   borraElementoDetalle(item, cantidad) {
-    console.log(item, cantidad);
     this.totalCantidad = this.totalCantidad - cantidad;
     this.detalleArray.splice(item, 1);
     if (this.detalleArray.length > 0) {
@@ -124,7 +120,7 @@ export class EgresoStockComponent implements OnInit, OnDestroy {
     }
   }
   confirmaSalidaDefinitiva(enca, items) {
-    console.log(items);
+    console.log('Registro Items:', items);
     items.forEach(item => {
       this.regSalida = {
         fecha: enca.fecha,
@@ -132,18 +128,23 @@ export class EgresoStockComponent implements OnInit, OnDestroy {
         tipoMovimiento: 'EG-Stock',
         idProducto: item.idProducto,
         nombreProducto: item.nombreProducto,
-        nombreProveedor: ' ',
-        nombreCliente: ' ',
+        nombreProveedor: 'N/A ',
+        nombreCliente: 'Salida por Stock',
         cantidadEgreso: item.cantidadEgreso,
         cantidadIngreso: 0,
         precioUnitario: 0,
         precioCompra: 0,
         precioVenta: 0
       };
-      console.log(this.regSalida);
-      console.log(item);
-      // this.movServ.addMovimiento(this.regSalida);  // Agrego movimiento a la base de entradas y salidas
-      // const cantidadActualizar = item.existenciaProducto - item.cantidadIngreso;
+      console.log('Registro Salida:', this.regSalida);
+      console.log('Stock Anterior: ', item.existenciaProducto);
+      console.log('Salida: ', this.regSalida.cantidadEgreso);
+      console.log('Stock Final: ', item.existenciaProducto - this.regSalida.cantidadEgreso);
+      // Agrego el registro de movimiento
+      this.movServ.addMovimiento(this.regSalida);
+      // Actualizo el stock del producto
+      const nuevostock = item.existenciaProducto - this.regSalida.cantidadEgreso
+      this.prodServ.updateExistencia(item.idProducto, nuevostock);
     });
   }
   ngOnDestroy() {
