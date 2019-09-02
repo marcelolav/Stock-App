@@ -46,14 +46,17 @@ export class EgresoVentasComponent implements OnInit, OnDestroy {
   }
 
   agregarItem(enc: Encabezado) {
-    console.log(enc.nombreCliente);
-    console.log('Cliente:', enc.nombreCliente.split(',')[0]);
-    console.log('Direccion:', enc.nombreCliente.split(',')[1]);
-    console.log('Telefono:', enc.nombreCliente.split(',')[2]);
-    console.log('CUIT:', enc.nombreCliente.split(',')[3]);
-    console.log('Credito Actual:', enc.nombreCliente.split(',')[4]);
-    console.log('Credito Disponible:', enc.nombreCliente.split(',')[5]);
-
+    this.encabezado = {
+      fecha: enc.fecha,
+      comprobante: enc.comprobante,
+      nombreCliente: enc.nombreCliente.split(',')[0],
+      direccionCliente: enc.nombreCliente.split(',')[1],
+      telefonoCliente: enc.nombreCliente.split(',')[2],
+      cuitCliente: enc.nombreCliente.split(',')[3],
+      creditoMaximoCliente: +enc.nombreCliente.split(',')[5],
+      creditoDisponibleCliente: +enc.nombreCliente.split(',')[4]
+    };
+    console.log('Encabezado:', this.encabezado);
   }
 
 }
