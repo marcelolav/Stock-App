@@ -1,1 +1,23 @@
-<p>egreso-ventas works!</p>
+<h3>Salida por Facturación</h3>
+<!-- Fecha y comprobante unicamente -->
+<div class="row">
+    <div class="form-group mr-3">
+        <label for="fecha">Fecha:</label>
+        <input type="text" placeholder="Fecha" class="form-control" bsDatepicker name="fecha"
+            [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" [(ngModel)]="encabezado.fecha">
+    </div>
+    <div class="form-group mr-3">
+        <label for="cliente">Cliente: </label>
+        <select name="cliente" id="cliente" class="form-control" [(ngModel)]="encabezado.nombreCliente">
+            <option *ngFor="let cli of clientes"
+                value="{{cli.nombreCliente}}, {{cli.direccion}}, {{cli.telefono}}, {{cli.cuit}}, {{cli.creditoActual}}, {{cli.creditoDisponible}}">
+                {{cli.nombreCliente}}</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="comprobante">Nº Comprobante/Referencia</label>
+        <input type="text" name="comprobante" id="comprobante" [(ngModel)]="encabezado.comprobante"
+            class="form-control">
+    </div>
+</div>
+<button (click)="agregarItem(encabezado)">Agrega Item</button>

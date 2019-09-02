@@ -32,7 +32,9 @@ export class AbmClientesComponent implements OnInit, OnDestroy {
       nombreCliente: cliente.nombreCliente,
       direccion: cliente.direccion,
       telefono: cliente.telefono,
-      cuit: cliente.cuit
+      cuit: cliente.cuit,
+      creditoActual: cliente.creditoActual,
+      creditoDisponible: cliente.creditoDisponible
     };
     this.cliSer.addCliente(this.regCliente);
     this.regCliente = {} as Cliente;
@@ -55,10 +57,13 @@ export class AbmClientesComponent implements OnInit, OnDestroy {
       nombreCliente: data.nombreCliente,
       direccion: data.direccion,
       telefono: data.telefono,
-      cuit: data.cuit
+      cuit: data.cuit,
+      creditoActual: data.creditoActual,
+      creditoDisponible: data.creditoDisponible
     };
     this.modalRef = this.modalService.show(template);
-  }
+  };
+
   ngOnDestroy() {
     this.unsubscribe.next();
     this.unsubscribe.complete();
