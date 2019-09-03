@@ -1,6 +1,7 @@
 export interface Encabezado {
     fecha: string;
     nombreProveedor?: string;
+    infoCliente?: string;
     nombreCliente?: string;
     direccionCliente?: string;
     telefonoCliente?: string;
