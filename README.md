@@ -96,6 +96,12 @@ Verificar:  La existencia de la carpeta /dist  esta carpeta se crea cuando ejecu
 
 Cuando se abre un servidor de desarrollo en la máquina local puede que de algun tipo de advertencia desde el firewall, verifique el mensaje y decida en consecuencia.  Siempre necesitará un puerto disponible para la escucha de la app. 
 
+### 03/09/2019 Cambios al docker-compose.yml
+
+Se implementa la opción de crear un volumen en el disco local conectando el contenedor con la app, esto hace que una vez hecho el build de la aplicacion se pueda desplegar el
+contenedor directamente pudiendo hacer cambios en tiempo real (mediante la rebuild de la app) sin necesidad de crear otro contenedor o realizar el procedimiento anterior.
+
+
 Para consultas, reporte de errores o bien si desea unirse al proyecto puede:
 
 [Comunicarse con desarrollo](mailto:marcelo.lavandeira@gmail.com)	
