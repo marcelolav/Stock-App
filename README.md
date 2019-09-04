@@ -99,8 +99,7 @@ Cuando se abre un servidor de desarrollo en la máquina local puede que de algun
 ### 03/09/2019 Cambios al docker-compose.yml
 
 Se implementa la opción de crear un volumen en el disco local conectando el contenedor con la app, esto hace que una vez hecho el build de la aplicacion se pueda desplegar el
-contenedor directamente pudiendo hacer cambios en tiempo real (mediante la rebuild de la app) sin necesidad de crear otro contenedor o realizar el procedimiento anterior.
-
+contenedor directamente pudiendo hacer cambios.  Siempre que realice un cambio debe realizar un restart del container para que los cambios tengan efecto (Esto en windows 10)
 
 Para consultas, reporte de errores o bien si desea unirse al proyecto puede:
 
