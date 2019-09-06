@@ -21,7 +21,26 @@
     </div>
 </div>
 <button (click)="openModal(agregaItem, encabezado, [])">Agrega Item</button>
-
+<div class="row" *ngIf="items">
+    <table>
+        <thead>
+            <th>#Item</th>
+            <th>Descripcion</th>
+            <th>Precio Unitario</th>
+            <th>Cantidad</th>
+            <th>Total</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of detalleArray ; let i = index">
+                <td> {{i}} </td>
+                <td> {{item.nombreProducto}} </td>
+                <td> {{item.precioVenta}} </td>
+                <td> {{item.cantidadEgreso}} </td>
+                <td> {{item.precioTotalLinea}} </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 <ng-template #agregaItem>
 
     <div class="modal-header">
@@ -42,16 +61,16 @@
             </div>
             <div class="form-group mr1 col">
                 <label for="precioVenta">Precio Unitario</label>
-                <input type="number" class="form-control" readonly value="{{precioVentaProvisorio}}" id="precioVenta">
+                <input type="number" class="form-control" readonly value="{{precioVentaProvisorio}}" id="precioVenta" name="precioVenta" [(ngModel)]="detalleItem.precioVenta">
             </div>
             <div class="form-group mr1 col">
                 <label for="cantidad">Cantidad</label>
-                <input type="number" name="cantidad" id="cantidad" class="form-control" value="{{cantidadLinea}}"
+                <input type="number" name="cantidad" id="cantidad" class="form-control" value="{{cantidadLinea}}" [(ngModel)]="detalleItem.cantidadEgreso"
                     (input)="calculoSubtotal($event.target.value)">
             </div>
             <div class="form-group mr1 col">
                 <label for="precioVentaLinea">Importe</label>
-                <input type="number" class="form-control" readonly value="{{precioVentaLinea}}" id="precioVentaLinea">
+                <input type="number" class="form-control" readonly value="{{precioVentaLinea}}" id="precioVentaLinea" name="precioTotalLinea" [(ngModel)]="detalleItem.precioTotalLinea">
             </div>
 
         </div>

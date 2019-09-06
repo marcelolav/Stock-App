@@ -25,7 +25,11 @@ export class EgresoVentasComponent implements OnInit, OnDestroy {
   encabezado = {} as Encabezado; // Interface Interna
   detalle = {} as Detalle; // interface interna
   detalleItem = {} as Detalle; // interface interna
+  detalleArray = [];
+
   regSalida = {} as Movimientos;  // interface de firestore
+
+  items = false;
 
   cantidadExistencia = 0;
   cantidadLinea = 0;
@@ -71,11 +75,13 @@ export class EgresoVentasComponent implements OnInit, OnDestroy {
       creditoDisponibleCliente: +enc.infoCliente.split(',')[4]
     };
     this.detalle = {
+      idProducto: det.idProducto,
       nombreProducto: det.nombreProducto,
       precioUnitario: det.precioUnitario,
       precioCompra: det.precioCompra,
       precioVenta: det.precioVenta,
-      cantidadEgreso: det.cantidadEgreso
+      cantidadEgreso: det.cantidadEgreso,
+      precioTotalLinea: det.precioTotalLinea
     }
     this.modalRef = this.modalService.show(template);
     this.modalRef.setClass('modal-lg');
@@ -85,20 +91,34 @@ export class EgresoVentasComponent implements OnInit, OnDestroy {
 
 
   agregarItem(enc: Encabezado, det: Detalle) {
+    this.hayDetalle = true;
     console.log('Encabezado', enc);
     console.log('Detalle: ', det);
-  //   this.encabezado = {
-  //     fecha: enc.fecha,
-  //     comprobante: enc.comprobante,
-  //     nombreCliente: enc.nombreCliente.split(',')[0],
-  //     direccionCliente: enc.nombreCliente.split(',')[1],
-  //     telefonoCliente: enc.nombreCliente.split(',')[2],
-  //     cuitCliente: enc.nombreCliente.split(',')[3],
-  //     creditoMaximoCliente: +enc.nombreCliente.split(',')[5],
-  //     creditoDisponibleCliente: +enc.nombreCliente.split(',')[4]
-  //   };
-  //   console.log('Encabezado:', this.encabezado);
-  }
+    this.encabezado = enc;
+    const idProducto = det.idProducto.split(',')[0];
+    const nombreProducto = det.idProducto.split(',')[1];
+    const existenciaProducto = +det.idProducto.split(',')[2];
+    const precioVenta = +det.idProducto.split(',')[3];
+    const cantidadEgreso = +det.cantidadEgreso;
+    const precioTotalLinea = +precioVenta * cantidadEgreso;
+    this.detalleItem = {
+      idProducto,
+      nombreProducto,
+      existenciaProducto,
+      precioVenta,
+      cantidadEgreso,
+      precioTotalLinea
+    };
+    this.detalleArray.push(this.detalleItem);
+    if (this.detalleArray.length > 0) {
+      this.items = true;
+    } else {
+      this.items = false;
+    }
+    this.detalleItem = {} as Detalle;
+    console.log('DetalleItem Obj:', this.detalleItem);
+    console.log('Detalle Array:', this.detalleArray);
+   }
 
   cambioProducto(valorSelect) {
     const completo = valorSelect.target.value;

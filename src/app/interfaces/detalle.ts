@@ -5,7 +5,8 @@ export interface Detalle {
     existenciaProducto?: number;
     cantidadIngreso?: number;
     cantidadEgreso?: number;
-    precioUnitario: number;
-    precioCompra: number;
-    precioVenta: number;
+    precioUnitario?: number;
+    precioTotalLinea?: number;
+    precioCompra?: number;
+    precioVenta?: number;
 }
