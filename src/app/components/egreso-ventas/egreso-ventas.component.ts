@@ -62,7 +62,6 @@ export class EgresoVentasComponent implements OnInit, OnDestroy {
 
   // Abre el modal con los datos
   openModal(template: TemplateRef<any>, enc: any, det: any) {
-    console.log('Enc entra como:', enc);
     this.encabezado = {
       fecha: enc.fecha,
       comprobante: enc.comprobante,
@@ -85,15 +84,10 @@ export class EgresoVentasComponent implements OnInit, OnDestroy {
     }
     this.modalRef = this.modalService.show(template);
     this.modalRef.setClass('modal-lg');
-    console.log('nombre cliente: ', this.encabezado.nombreCliente);
-    console.log('Detalle: ', this.detalle);
   }
 
 
   agregarItem(enc: Encabezado, det: Detalle) {
-    this.hayDetalle = true;
-    console.log('Encabezado', enc);
-    console.log('Detalle: ', det);
     this.encabezado = enc;
     const idProducto = det.idProducto.split(',')[0];
     const nombreProducto = det.idProducto.split(',')[1];
