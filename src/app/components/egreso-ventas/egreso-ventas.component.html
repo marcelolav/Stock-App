@@ -3,44 +3,71 @@
 <div class="row">
     <div class="form-group mr-3">
         <label for="fecha">Fecha:</label>
-        <input type="text" placeholder="Fecha" class="form-control" bsDatepicker name="fecha"
-            [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" [(ngModel)]="encabezado.fecha">
+        <input type="text" placeholder="Fecha" class="form-control" bsDatepicker name="fecha" required
+            [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" #fecha="ngModel" [(ngModel)]="encabezado.fecha">
+        <div *ngIf="!fecha.valid && fecha.touched" class="alert alert-danger" role="alert">
+            La fecha es Obligatoria!
+        </div>
     </div>
     <div class="form-group mr-3">
         <label for="cliente">Cliente: </label>
-        <select name="infoCliente" id="cliente" class="form-control" [(ngModel)]="encabezado.infoCliente">
+        <select name="infoCliente" id="cliente" class="form-control" #infoCliente="ngModel"
+            [(ngModel)]="encabezado.infoCliente" required>
             <option *ngFor="let cli of clientes"
                 value="{{cli.nombreCliente}}, {{cli.direccion}}, {{cli.telefono}}, {{cli.cuit}}, {{cli.creditoActual}}, {{cli.creditoDisponible}}">
                 {{cli.nombreCliente}}</option>
         </select>
+        <div *ngIf="!infoCliente.valid && infoCliente.touched" class="alert alert-danger"> 
+            El Nombre del Cliente es obligatorio
+        </div>
     </div>
     <div class="form-group">
         <label for="comprobante">Nº Comprobante/Referencia</label>
-        <input type="text" name="comprobante" id="comprobante" [(ngModel)]="encabezado.comprobante"
-            class="form-control">
+        <input type="text" name="comprobante" id="comprobante" #comprobante="ngModel"
+            [(ngModel)]="encabezado.comprobante" required class="form-control">
+        <div *ngIf="!comprobante.valid && comprobante.touched" class="alert alert-danger"> 
+            El Nro de Comprobante es obligatorio
+        </div>
     </div>
 </div>
-<button (click)="openModal(agregaItem, encabezado, [])">Agrega Item</button>
+<button (click)="openModal(agregaItem, encabezado, [])" *ngIf="fecha.valid && infoCliente.valid && comprobante.valid"
+    class="btn btn-primary mb-4">Agrega Item</button>
 <div class="row" *ngIf="items">
-    <table>
-        <thead>
-            <th>#Item</th>
+    <table class="table-bordered">
+        <thead class="bg-success text-center">
+            <th style="width: 50px;">#Item</th>
             <th>Descripcion</th>
             <th>Precio Unitario</th>
             <th>Cantidad</th>
-            <th>Total</th>
+            <th>Sub Total</th>
+            <th> </th>
         </thead>
         <tbody>
             <tr *ngFor="let item of detalleArray ; let i = index">
                 <td> {{i}} </td>
                 <td> {{item.nombreProducto}} </td>
-                <td> {{item.precioVenta}} </td>
-                <td> {{item.cantidadEgreso}} </td>
-                <td> {{item.precioTotalLinea}} </td>
+                <td class="text-right"> {{item.precioVenta | number:'0.2-2'}} </td>
+                <td class="text-right"> {{item.cantidadEgreso | number:'0.2-2'}} </td>
+                <td class="text-right"> {{item.precioTotalLinea | number:'0.2-2'}} </td>
+                <td>
+                    <button (click)="borraElementoDetalle(i, item.precioTotalLinea)">
+                        <fa name="times"></fa>
+                    </button>
+                </td>
             </tr>
         </tbody>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td class="text-right">Importe Total : </td>
+        <td class="text-right">{{importeTotal | number:'0.2-2'}} </td>
     </table>
 </div>
+<div class="row" *ngIf="items">
+    <button class="btn btn-success" (click)="confirmaFactura(encabezado, detalleArray)">Confirmar Factura</button>
+</div>
+
+
 <ng-template #agregaItem>
 
     <div class="modal-header">
@@ -52,7 +79,7 @@
             <div class="form-group mr-1 col">
                 <label for="producto">Producto:</label>
                 <select name="producto" id="producto" class="form-control" name="nombreProducto"
-                    (change)="cambioProducto($event)" [(ngModel)]="detalleItem.idProducto">
+                    (change)="cambioProducto($event)" [(ngModel)]="detalle.idProducto">
                     <option *ngFor="let prod of productos"
                         value="{{prod.id}}, {{prod.nombreProducto}}, {{prod.existencia}}, {{prod.precioVenta}} ">
                         {{prod.nombreProducto}}
@@ -61,25 +88,27 @@
             </div>
             <div class="form-group mr1 col">
                 <label for="precioVenta">Precio Unitario</label>
-                <input type="number" class="form-control" readonly value="{{precioVentaProvisorio}}" id="precioVenta" name="precioVenta" [(ngModel)]="detalleItem.precioVenta">
+                <input type="number" class="form-control" readonly value="{{precioVentaProvisorio}}" id="precioVenta"
+                    name="precioVenta" [(ngModel)]="detalle.precioVenta">
             </div>
             <div class="form-group mr1 col">
                 <label for="cantidad">Cantidad</label>
-                <input type="number" name="cantidad" id="cantidad" class="form-control" value="{{cantidadLinea}}" [(ngModel)]="detalleItem.cantidadEgreso"
-                    (input)="calculoSubtotal($event.target.value)">
+                <input type="number" name="cantidad" id="cantidad" class="form-control" value="{{cantidadLinea}}"
+                    [(ngModel)]="detalle.cantidadEgreso" (input)="calculoSubtotal($event.target.value)">
             </div>
             <div class="form-group mr1 col">
                 <label for="precioVentaLinea">Importe</label>
-                <input type="number" class="form-control" readonly value="{{precioVentaLinea}}" id="precioVentaLinea" name="precioTotalLinea" [(ngModel)]="detalleItem.precioTotalLinea">
+                <input type="number" class="form-control" readonly value="{{precioVentaLinea}}" id="precioVentaLinea"
+                    name="precioTotalLinea" [(ngModel)]="detalle.precioTotalLinea">
             </div>
 
         </div>
     </div>
     <div class="modal-footer">
-        <button (click)="agregarItem(encabezado, detalleItem)" class="btn btn-primary">
+        <button (click)="agregarItem(encabezado, detalle)" class="btn btn-primary">
             <fa name="check"></fa> Confirmar
         </button>
-        <button (click)="modalRef.hide()">
+        <button (click)="modalRef.hide()" class="btn btn-secondary">
             <fa name="times"></fa> Cancelar
         </button>
     </div>

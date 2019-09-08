@@ -24,7 +24,6 @@ export class EgresoVentasComponent implements OnInit, OnDestroy {
 
   encabezado = {} as Encabezado; // Interface Interna
   detalle = {} as Detalle; // interface interna
-  detalleItem = {} as Detalle; // interface interna
   detalleArray = [];
 
   regSalida = {} as Movimientos;  // interface de firestore
@@ -35,6 +34,7 @@ export class EgresoVentasComponent implements OnInit, OnDestroy {
   cantidadLinea = 0;
   precioVentaProvisorio = 0;
   precioVentaLinea = 0;
+  importeTotal = 0;
 
   modalRef: BsModalRef;
 
@@ -60,7 +60,7 @@ export class EgresoVentasComponent implements OnInit, OnDestroy {
     this.unsubscribe.complete();
   }
 
-  // Abre el modal con los datos
+  // Abre el modal con todos los datos (no importa que detalle no este inicialmente o este en cero)
   openModal(template: TemplateRef<any>, enc: any, det: any) {
     this.encabezado = {
       fecha: enc.fecha,
@@ -95,7 +95,9 @@ export class EgresoVentasComponent implements OnInit, OnDestroy {
     const precioVenta = +det.idProducto.split(',')[3];
     const cantidadEgreso = +det.cantidadEgreso;
     const precioTotalLinea = +precioVenta * cantidadEgreso;
-    this.detalleItem = {
+    this.importeTotal = this.importeTotal + precioTotalLinea;
+
+    this.detalle = {
       idProducto,
       nombreProducto,
       existenciaProducto,
@@ -103,17 +105,17 @@ export class EgresoVentasComponent implements OnInit, OnDestroy {
       cantidadEgreso,
       precioTotalLinea
     };
-    this.detalleArray.push(this.detalleItem);
+    this.detalleArray.push(this.detalle);
     if (this.detalleArray.length > 0) {
       this.items = true;
     } else {
       this.items = false;
     }
-    this.detalleItem = {} as Detalle;
-    console.log('DetalleItem Obj:', this.detalleItem);
+    this.detalle = {} as Detalle;
+    console.log('Detalle Obj:', this.detalle);
     console.log('Detalle Array:', this.detalleArray);
    }
-
+  // Cuando en el select cambia de producto actualiza valores
   cambioProducto(valorSelect) {
     const completo = valorSelect.target.value;
     const idProducto = completo.split(',')[0];
@@ -122,9 +124,24 @@ export class EgresoVentasComponent implements OnInit, OnDestroy {
     this.precioVentaProvisorio = +completo.split(',')[3]
     this.calculoSubtotal(this.cantidadLinea);
   }
+  borraElementoDetalle(item, precioLinea) {
+    this.importeTotal = this.importeTotal - precioLinea;
+    this.detalleArray.splice(item,1);
+    if (this.detalleArray.length > 0) {
+      this.items = true;
+    } else {
+      this.items = false;
+    }
+  }
+  // Calcula el subtotal de la linea dado un valor 
   calculoSubtotal(valor) {
     console.log(valor);
     this.precioVentaLinea = this.precioVentaProvisorio * valor ;
+  }
 
+  // Confirma la factura
+  confirmaFactura(enc, det) {
+    console.log('Encabezado:', enc);
+    console.log('Detalle: ', det);
   }
 }
