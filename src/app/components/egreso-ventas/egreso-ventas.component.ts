@@ -11,6 +11,7 @@ import { Detalle } from 'src/app/interfaces/detalle';
 import { Movimientos } from 'src/app/interfaces/movimientos';
 // Modales
 import { BsModalService, BsModalRef } from 'ngx-bootstrap';
+import { MovimientosService } from 'src/app/services/movimientos.service';
 
 @Component({
   selector: 'ang-egreso-ventas',
@@ -45,6 +46,7 @@ export class EgresoVentasComponent implements OnInit, OnDestroy {
   constructor(
     private prodserv: ProductosService,
     private clieserv: ClientesService,
+    private movserv: MovimientosService,
     private modalService: BsModalService
   ) { }
 
@@ -160,10 +162,6 @@ export class EgresoVentasComponent implements OnInit, OnDestroy {
 
   // Confirma la factura
   confirmaFactura(enc, det) {
-    console.log('Encabezado:', enc);
-    console.log('Detalle: ', det);
-    //this.encabezado = enc;
-    //this.detalle = det;
     det.forEach(item => {
       this.regSalida = {
         fecha: enc.fecha,
@@ -179,7 +177,13 @@ export class EgresoVentasComponent implements OnInit, OnDestroy {
         precioCompra: 0,
         precioVenta: item.precioVenta
       };
-      console.log(this.regSalida);
+      this.movserv.addMovimiento(this.regSalida);
+      this.encabezado = {} as Encabezado;
+      this.detalle = {} as Detalle;
+      this.detalleArray = [];
+      this.importeTotal = 0;
+      this.items = false;
+      this.modalRef.hide();
     });
   }
 }
