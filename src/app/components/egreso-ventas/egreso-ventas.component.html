@@ -17,7 +17,7 @@
                 value="{{cli.nombreCliente}}, {{cli.direccion}}, {{cli.telefono}}, {{cli.cuit}}, {{cli.creditoActual}}, {{cli.creditoDisponible}}">
                 {{cli.nombreCliente}}</option>
         </select>
-        <div *ngIf="!infoCliente.valid && infoCliente.touched" class="alert alert-danger"> 
+        <div *ngIf="!infoCliente.valid && infoCliente.touched" class="alert alert-danger">
             El Nombre del Cliente es obligatorio
         </div>
     </div>
@@ -25,7 +25,7 @@
         <label for="comprobante">Nº Comprobante/Referencia</label>
         <input type="text" name="comprobante" id="comprobante" #comprobante="ngModel"
             [(ngModel)]="encabezado.comprobante" required class="form-control">
-        <div *ngIf="!comprobante.valid && comprobante.touched" class="alert alert-danger"> 
+        <div *ngIf="!comprobante.valid && comprobante.touched" class="alert alert-danger">
             El Nro de Comprobante es obligatorio
         </div>
     </div>
@@ -33,7 +33,7 @@
 <button (click)="openModal(agregaItem, encabezado, [])" *ngIf="fecha.valid && infoCliente.valid && comprobante.valid"
     class="btn btn-primary mb-4">Agrega Item</button>
 <div class="row" *ngIf="items">
-    <table class="table-bordered">
+    <table class="table table-bordered">
         <thead class="bg-success text-center">
             <th style="width: 50px;">#Item</th>
             <th>Descripcion</th>
@@ -64,7 +64,8 @@
     </table>
 </div>
 <div class="row" *ngIf="items">
-    <button class="btn btn-success" (click)="confirmaFactura(encabezado, detalleArray)">Confirmar Factura</button>
+    <button class="btn btn-success" (click)="openModal(modalConfirmar, encabezado, detalleArray)">Confirmar
+        Factura</button>
 </div>
 
 
@@ -113,4 +114,69 @@
         </button>
     </div>
 
+</ng-template>
+
+<ng-template #modalConfirmar>
+    <div class="modal-header">
+        <h3 class="text-center">Confirmar datos de comprobante a emitir</h3>
+    </div>
+    <div class="modal-body">
+        <table class="table table-bordered">
+            <thead>
+                <th class="bg-success text-center">Fecha</th>
+                <th class="bg-success text-center">Nº Comprobante</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-center">{{encabezado.fecha | date:'dd/MM/yyyy'}}</td>
+                    <td class="text-center">{{encabezado.comprobante}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-bordered">
+            <thead>
+                <th>Razón Social / Nombre y Apellido</th>
+                <th class="text-center">CUIT</th>
+
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{encabezado.nombreCliente}}</td>
+                    <td>{{encabezado.cuitCliente}} </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-bordered">
+            <thead>
+                <th>#</th>
+                <th>Descripción</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Importe</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of detalleArray; let i=index">
+                    <td> {{i}} </td>
+                    <td> {{item.nombreProducto }} </td>
+                    <td class="text-right"> {{item.cantidadEgreso | number:'0.2-2'}} </td>
+                    <td class="text-right"> {{item.precioVenta | number:'0.2-2'}} </td>
+                    <td class="text-right"> {{item.precioTotalLinea | number:'0.2-2'}} </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="text-right bg-success"> Total:</td>
+                    <td class="text-right"> {{importeTotal | number:'0.2-2' }} </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success" (click)="confirmaFactura(encabezado, detalleArray)">Confirmar</button>
+        <button (click)="modalRef.hide()" class="btn btn-secondary">
+            <fa name="times"></fa>
+            Cancelar
+        </button>
+    </div>
 </ng-template>

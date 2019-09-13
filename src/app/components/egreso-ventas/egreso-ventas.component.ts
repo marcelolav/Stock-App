@@ -30,6 +30,8 @@ export class EgresoVentasComponent implements OnInit, OnDestroy {
 
   items = false;
 
+  hayStock = false;
+
   cantidadExistencia = 0;
   cantidadLinea = 0;
   precioVentaProvisorio = 0;
@@ -105,7 +107,9 @@ export class EgresoVentasComponent implements OnInit, OnDestroy {
       cantidadEgreso,
       precioTotalLinea
     };
-    this.detalleArray.push(this.detalle);
+    if (this.hayStock) {
+      this.detalleArray.push(this.detalle);
+    }
     if (this.detalleArray.length > 0) {
       this.items = true;
     } else {
@@ -124,6 +128,16 @@ export class EgresoVentasComponent implements OnInit, OnDestroy {
     this.precioVentaProvisorio = +completo.split(',')[3]
     this.calculoSubtotal(this.cantidadLinea);
   }
+  verificoCantidad(cant) {
+    if (cant > this.cantidadExistencia) {
+      this.hayStock = false;
+      return false;
+    } else {
+      this.hayStock = true;
+      return true;
+    }
+  }
+
   borraElementoDetalle(item, precioLinea) {
     this.importeTotal = this.importeTotal - precioLinea;
     this.detalleArray.splice(item,1);
@@ -135,13 +149,37 @@ export class EgresoVentasComponent implements OnInit, OnDestroy {
   }
   // Calcula el subtotal de la linea dado un valor 
   calculoSubtotal(valor) {
-    console.log(valor);
-    this.precioVentaLinea = this.precioVentaProvisorio * valor ;
+    if (this.verificoCantidad(valor)) {
+      this.precioVentaLinea = this.precioVentaProvisorio * valor ;
+    } else {
+      alert('ERROR: No hay suficientes existencias!');
+      this.precioVentaLinea = 0;
+    }
+  
   }
 
   // Confirma la factura
   confirmaFactura(enc, det) {
     console.log('Encabezado:', enc);
     console.log('Detalle: ', det);
+    //this.encabezado = enc;
+    //this.detalle = det;
+    det.forEach(item => {
+      this.regSalida = {
+        fecha: enc.fecha,
+        comprobante: enc.comprobante,
+        tipoMovimiento: 'EG-Ventas',
+        idProducto: item.idProducto,
+        nombreProducto: item.nombreProducto,
+        nombreCliente: enc.nombreCliente,
+        nombreProveedor: '-',
+        cantidadIngreso: 0,
+        cantidadEgreso: item.cantidadEgreso,
+        precioUnitario: item.precioVenta,
+        precioCompra: 0,
+        precioVenta: item.precioVenta
+      };
+      console.log(this.regSalida);
+    });
   }
 }
